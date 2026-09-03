@@ -1,0 +1,239 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <linearGradient id="wallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="50%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <linearGradient id="shelfMetallic" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#64748b"/>
+      <stop offset="50%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="floorBright" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="50%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Bright Supermarket Store Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#1e293b"/>
+
+  <!-- Floor -->
+  <polygon points="450,300 1350,300 1920,1080 0,1080" fill="url(#floorBright)"/>
+
+  <!-- Ceiling & Overhead Track Lights -->
+  <rect x="0" y="0" width="1920" height="240" fill="#0f172a"/>
+  <!-- Track Light Rails -->
+  <line x1="0" y1="80" x2="1920" y2="80" stroke="#64748b" stroke-width="6"/>
+  <line x1="0" y1="140" x2="1920" y2="140" stroke="#64748b" stroke-width="8"/>
+  
+  <!-- Spotlight Fixtures & Cones -->
+  <g fill="#f8fafc">
+    <circle cx="200" cy="140" r="10"/>
+    <polygon points="160,240 240,240 210,140 190,140" fill="#ffffff" opacity="0.15"/>
+    <circle cx="450" cy="80" r="8"/>
+    <polygon points="420,220 480,220 458,80 442,80" fill="#ffffff" opacity="0.15"/>
+    <circle cx="700" cy="140" r="10"/>
+    <polygon points="660,240 740,240 710,140 690,140" fill="#ffffff" opacity="0.15"/>
+    <circle cx="950" cy="80" r="8"/>
+    <polygon points="920,220 980,220 958,80 942,80" fill="#ffffff" opacity="0.15"/>
+    <circle cx="1200" cy="140" r="10"/>
+    <polygon points="1160,240 1240,240 1210,140 1190,140" fill="#ffffff" opacity="0.15"/>
+    <circle cx="1500" cy="80" r="8"/>
+    <polygon points="1470,220 1530,220 1508,80 1492,80" fill="#ffffff" opacity="0.15"/>
+  </g>
+
+  <!-- Center White Support Pillar -->
+  <rect x="980" y="0" width="140" height="500" fill="#f8fafc"/>
+  <rect x="980" y="0" width="20" height="500" fill="#e2e8f0"/>
+
+  <!-- Back Aisle Stores & Display -->
+  <rect x="850" y="320" width="400" height="180" fill="#334155" stroke="#475569" stroke-width="2"/>
+  <!-- Distant Shelves -->
+  <line x1="860" y1="380" x2="1240" y2="380" stroke="#f1f5f9" stroke-width="4"/>
+  <line x1="860" y1="420" x2="1240" y2="420" stroke="#f1f5f9" stroke-width="4"/>
+  <line x1="860" y1="460" x2="1240" y2="460" stroke="#f1f5f9" stroke-width="4"/>
+
+  <!-- LEFT MULTI-TIERED PRODUCE DISPLAY CASE (Prominent) -->
+  <polygon points="0,150 900,260 920,1080 0,1080" fill="#0f172a"/>
+  
+  <!-- Left Metal Shelves Frame -->
+  <polygon points="0,200 880,290 880,310 0,220" fill="url(#shelfMetallic)"/>
+  <polygon points="0,380 860,430 860,450 0,400" fill="url(#shelfMetallic)"/>
+  <polygon points="0,560 840,590 840,610 0,580" fill="url(#shelfMetallic)"/>
+  <polygon points="0,740 820,760 820,780 0,760" fill="url(#shelfMetallic)"/>
+  <polygon points="0,920 800,930 800,950 0,940" fill="url(#shelfMetallic)"/>
+
+  <!-- Top Shelf Produce: Bright Green & Yellow & Red Peppers / Green Apples -->
+  <g id="leftTopShelf">
+    <!-- Green Apples / Peppers (Top Left) -->
+    <circle cx="80" cy="180" r="25" fill="#84cc16"/>
+    <circle cx="120" cy="175" r="26" fill="#65a30d"/>
+    <circle cx="160" cy="185" r="24" fill="#84cc16"/>
+    <circle cx="200" cy="180" r="25" fill="#65a30d"/>
+    <!-- Red Peppers -->
+    <circle cx="260" cy="190" r="24" fill="#ef4444"/>
+    <circle cx="295" cy="195" r="25" fill="#dc2626"/>
+    <circle cx="330" cy="190" r="22" fill="#ef4444"/>
+    <!-- Green Peppers -->
+    <circle cx="380" cy="200" r="26" fill="#22c55e"/>
+    <circle cx="420" cy="205" r="24" fill="#16a34a"/>
+    <circle cx="460" cy="210" r="27" fill="#22c55e"/>
+    <!-- Yellow Peppers -->
+    <circle cx="510" cy="220" r="25" fill="#facc15"/>
+    <circle cx="550" cy="225" r="26" fill="#eab308"/>
+    <!-- Celery & Leafy Greens -->
+    <rect x="600" y="210" width="30" height="50" rx="10" fill="#4ade80" transform="rotate(15 600 210)"/>
+    <rect x="630" y="215" width="30" height="50" rx="10" fill="#22c55e" transform="rotate(10 630 215)"/>
+    <rect x="660" y="220" width="35" height="55" rx="10" fill="#16a34a" transform="rotate(5 660 220)"/>
+    <rect x="700" y="225" width="40" height="60" rx="10" fill="#15803d"/>
+  </g>
+
+  <!-- Second Shelf Produce: Grapes, Packaged Greens, Broccoli -->
+  <g id="leftSecondShelf">
+    <!-- Green Grapes -->
+    <circle cx="60" cy="340" r="18" fill="#a3e635"/>
+    <circle cx="95" cy="345" r="20" fill="#84cc16"/>
+    <circle cx="130" cy="340" r="19" fill="#a3e635"/>
+    <circle cx="165" cy="350" r="21" fill="#84cc16"/>
+    <!-- Purple Grapes -->
+    <circle cx="220" cy="355" r="20" fill="#9333ea"/>
+    <circle cx="255" cy="360" r="22" fill="#7e22ce"/>
+    <circle cx="290" cy="355" r="19" fill="#a855f7"/>
+    <!-- Packaged Salad Boxes -->
+    <rect x="340" y="340" width="60" height="40" rx="8" fill="#38bdf8" opacity="0.7"/>
+    <rect x="410" y="350" width="65" height="40" rx="8" fill="#38bdf8" opacity="0.7"/>
+    <!-- Cabbages / Broccoli -->
+    <circle cx="510" cy="380" r="28" fill="#16a34a"/>
+    <circle cx="560" cy="385" r="30" fill="#15803d"/>
+    <circle cx="610" cy="390" r="32" fill="#22c55e"/>
+    <circle cx="660" cy="395" r="28" fill="#16a34a"/>
+  </g>
+
+  <!-- Third Shelf Produce: Red Apples, Yellow Apples, Oranges -->
+  <g id="leftThirdShelf">
+    <!-- Red Apples Stack -->
+    <circle cx="70" cy="510" r="26" fill="#ef4444"/>
+    <circle cx="115" cy="515" r="28" fill="#dc2626"/>
+    <circle cx="160" cy="510" r="27" fill="#ef4444"/>
+    <circle cx="205" cy="520" r="29" fill="#b91c1c"/>
+    <circle cx="90" cy="485" r="25" fill="#f87171"/>
+    <circle cx="135" cy="490" r="27" fill="#ef4444"/>
+    <circle cx="180" cy="485" r="26" fill="#dc2626"/>
+
+    <!-- Yellow Apples -->
+    <circle cx="270" cy="530" r="27" fill="#facc15"/>
+    <circle cx="315" cy="535" r="28" fill="#eab308"/>
+    <circle cx="360" cy="530" r="26" fill="#fde047"/>
+    <circle cx="290" cy="500" r="25" fill="#facc15"/>
+    <circle cx="335" cy="505" r="26" fill="#eab308"/>
+
+    <!-- Oranges -->
+    <circle cx="430" cy="545" r="28" fill="#f97316"/>
+    <circle cx="475" cy="550" r="29" fill="#ea580c"/>
+    <circle cx="520" cy="545" r="27" fill="#f97316"/>
+
+    <!-- Red Peppers / Onions -->
+    <circle cx="590" cy="560" r="28" fill="#ef4444"/>
+    <circle cx="635" cy="565" r="29" fill="#dc2626"/>
+    <circle cx="680" cy="570" r="30" fill="#b91c1c"/>
+  </g>
+
+  <!-- Fourth Shelf Produce: Oranges, Onions, Leafy Greens -->
+  <g id="leftFourthShelf">
+    <circle cx="80" cy="690" r="30" fill="#f97316"/>
+    <circle cx="130" cy="695" r="32" fill="#ea580c"/>
+    <circle cx="180" cy="690" r="31" fill="#f97316"/>
+    <circle cx="230" cy="700" r="33" fill="#c2410c"/>
+
+    <circle cx="310" cy="710" r="32" fill="#fde047"/>
+    <circle cx="360" cy="715" r="34" fill="#eab308"/>
+
+    <!-- Leafy Green Bundles -->
+    <circle cx="450" cy="730" r="36" fill="#15803d"/>
+    <circle cx="510" cy="735" r="38" fill="#16a34a"/>
+    <circle cx="570" cy="740" r="35" fill="#22c55e"/>
+
+    <!-- Red Cabbage -->
+    <circle cx="650" cy="745" r="36" fill="#7e22ce"/>
+    <circle cx="710" cy="750" r="38" fill="#6b21a8"/>
+  </g>
+
+  <!-- Bottom Shelf (Foreground Left): Bright Yellow Bananas Stack -->
+  <g id="leftBottomBananas">
+    <!-- Bananas (Pile of yellow bunches) -->
+    <path d="M 40 830 Q 90 810 140 850 Q 90 860 40 830 Z" fill="#facc15" stroke="#ca8a04" stroke-width="2"/>
+    <path d="M 80 840 Q 130 820 180 860 Q 130 870 80 840 Z" fill="#fde047" stroke="#ca8a04" stroke-width="2"/>
+    <path d="M 120 850 Q 170 830 220 870 Q 170 880 120 850 Z" fill="#facc15" stroke="#ca8a04" stroke-width="2"/>
+    
+    <path d="M 20 900 Q 80 870 140 920 Q 80 940 20 900 Z" fill="#fde047" stroke="#ca8a04" stroke-width="2"/>
+    <path d="M 70 910 Q 130 880 190 930 Q 130 950 70 910 Z" fill="#facc15" stroke="#ca8a04" stroke-width="2"/>
+    <path d="M 120 920 Q 180 890 240 940 Q 180 960 120 920 Z" fill="#eab308" stroke="#ca8a04" stroke-width="2"/>
+
+    <path d="M 10 980 Q 70 950 130 1010 Q 70 1030 10 980 Z" fill="#fde047" stroke="#ca8a04" stroke-width="2"/>
+    <path d="M 60 990 Q 120 960 180 1020 Q 120 1040 60 990 Z" fill="#facc15" stroke="#ca8a04" stroke-width="2"/>
+    <path d="M 110 1000 Q 170 970 230 1030 Q 170 1050 110 1000 Z" fill="#eab308" stroke="#ca8a04" stroke-width="2"/>
+
+    <!-- Oranges in crates next to bananas -->
+    <circle cx="280" cy="850" r="32" fill="#f97316"/>
+    <circle cx="330" cy="855" r="34" fill="#ea580c"/>
+    <circle cx="380" cy="860" r="33" fill="#f97316"/>
+
+    <circle cx="270" cy="940" r="35" fill="#ea580c"/>
+    <circle cx="325" cy="945" r="36" fill="#f97316"/>
+    <circle cx="380" cy="950" r="35" fill="#ea580c"/>
+  </g>
+
+  <!-- Standalone Wooden Display Rack (Center Midground) -->
+  <rect x="1050" y="440" width="90" height="220" fill="#78350f" stroke="#451a03" stroke-width="3"/>
+  <rect x="1055" y="450" width="80" height="45" fill="#f97316"/>
+  <rect x="1055" y="505" width="80" height="45" fill="#eab308"/>
+  <rect x="1055" y="560" width="80" height="45" fill="#ef4444"/>
+
+  <!-- RIGHT SHELVES & PRODUCE RACKS -->
+  <polygon points="1920,150 1520,260 1500,1080 1920,1080" fill="#0f172a"/>
+
+  <!-- Right Metal Shelves -->
+  <polygon points="1920,200 1540,290 1540,310 1920,220" fill="url(#shelfMetallic)"/>
+  <polygon points="1920,380 1560,430 1560,450 1920,400" fill="url(#shelfMetallic)"/>
+  <polygon points="1920,560 1580,590 1580,610 1920,580" fill="url(#shelfMetallic)"/>
+  <polygon points="1920,740 1600,760 1600,780 1920,760" fill="url(#shelfMetallic)"/>
+  <polygon points="1920,920 1620,930 1620,950 1920,940" fill="url(#shelfMetallic)"/>
+
+  <!-- Right Produce Items (Tomatoes, Greens, Potatoes) -->
+  <g id="rightProduce">
+    <!-- Top Right Greens -->
+    <circle cx="1600" cy="230" r="22" fill="#22c55e"/>
+    <circle cx="1640" cy="225" r="24" fill="#16a34a"/>
+    <circle cx="1680" cy="220" r="23" fill="#15803d"/>
+
+    <!-- Mid Right Tomatoes -->
+    <circle cx="1630" cy="380" r="26" fill="#ef4444"/>
+    <circle cx="1675" cy="375" r="28" fill="#dc2626"/>
+    <circle cx="1720" cy="370" r="27" fill="#ef4444"/>
+
+    <!-- Lower Right Yellow Peppers & Oranges -->
+    <circle cx="1650" cy="540" r="28" fill="#facc15"/>
+    <circle cx="1700" cy="535" r="30" fill="#eab308"/>
+    <circle cx="1750" cy="530" r="29" fill="#fde047"/>
+
+    <!-- Red Tomatoes Pile -->
+    <circle cx="1660" cy="710" r="32" fill="#ef4444"/>
+    <circle cx="1715" cy="705" r="34" fill="#dc2626"/>
+    <circle cx="1770" cy="700" r="33" fill="#b91c1c"/>
+
+    <!-- Bottom Right Potatoes Bag Stack -->
+    <ellipse cx="1700" cy="880" rx="35" ry="24" fill="#d97706"/>
+    <ellipse cx="1760" cy="870" rx="38" ry="26" fill="#f59e0b"/>
+    <ellipse cx="1820" cy="860" rx="36" ry="25" fill="#d97706"/>
+
+    <ellipse cx="1680" cy="980" rx="40" ry="28" fill="#f59e0b"/>
+    <ellipse cx="1750" cy="970" rx="42" ry="30" fill="#d97706"/>
+    <ellipse cx="1820" cy="960" rx="40" ry="28" fill="#b45309"/>
+  </g>
+
+  <!-- Soft Vignette Shadow Overlay for modern sleek feel -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#020617" opacity="0.12" pointer-events="none"/>
+</svg>
