@@ -1,35 +1,31 @@
 /**
- * SmartMart Pro — Backend API Server (Updated BabyCare)
+ * SmartMart Pro — Backend API Server
  * ───────────────────────────────────
  * Enterprise Supermarket ERP & Storefront Backend
  * MongoDB Atlas + Gmail SMTP + JWT Auth + Full Modular APIs
  */
 
 require('dotenv').config();
-const dns = require('dns');
+const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-// Fix SRV DNS resolution issues on Windows local networks for MongoDB Atlas
-try {
-  dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
-} catch (e) {
-  // Ignore DNS override errors if unsupported
-}
-
-const fs = require('fs');
-const path = require('path');
-
-const seedDatabase = require('./seed');
+const connectDB = require('./config/db');
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Connect to Database
+connectDB();
 
 // ─── Middleware ─────────────────────────────────────────
 app.use(cors({ origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173'], credentials: true }));
 app.use(express.json());
 
+// ─── Static Files & Image Sync ──────────────────────────
 app.get('/api/sync-images', (req, res) => {
   const brainDir = 'C:/Users/sarat/.gemini/antigravity-ide/brain/3fc5a59a-2f99-4f0b-9a42-b62dd25c66f2';
   const destDir = path.resolve(__dirname, '../frontend/public/products');
@@ -60,30 +56,16 @@ app.get('/api/sync-images', (req, res) => {
   }
   return res.json({ status: 'ok', synced: true, copied });
 });
+
 app.use('/products', express.static(path.join(__dirname, '../frontend/public/products')));
 app.use('/products', express.static('C:/Users/sarat/.gemini/antigravity-ide/brain/3fc5a59a-2f99-4f0b-9a42-b62dd25c66f2'));
 app.use('/products', express.static('C:/Users/sarat/.gemini/antigravity-ide/brain/c09a5086-1d65-4f2d-8feb-bc0d74e0da8f'));
 app.use('/products', express.static('C:/Users/sarat/.gemini/antigravity-ide/brain/af93d1a5-2a4b-420e-9add-f56336c4df9f'));
 
-// ─── MongoDB Connection & Auto Seeding ─────────────────
-mongoose.connect(process.env.MONGO_URI)
-  .then(async () => {
-    console.log('✅ MongoDB Atlas connected successfully');
-    // Auto-seed database collections if empty
-    try {
-      await seedDatabase();
-    } catch (sErr) {
-      console.warn('Auto-seed check note:', sErr.message);
-    }
-  })
-  .catch(err => {
-    console.error('❌ MongoDB connection error:', err.message);
-  });
-
-// ─── API Routes ────────────────────────────────────────
+// ─── API Routes ─────────────────────────────────────────
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/employees', require('./routes/userRoutes'));
+app.use('/api/employees', require('./routes/employeeRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
 app.use('/api/inventory', require('./routes/inventoryRoutes'));
@@ -97,7 +79,7 @@ app.use('/api/deliveries', require('./routes/deliveryRoutes'));
 app.use('/api/stock-batches', require('./routes/stockBatchRoutes'));
 app.use('/api/payment', require('./routes/paymentRoutes'));
 
-// ─── Health Check ──────────────────────────────────────
+// ─── Health Check ───────────────────────────────────────
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -107,7 +89,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// ─── Start Server ──────────────────────────────────────
+// ─── Error Handling ─────────────────────────────────────
+app.use(notFound);
+app.use(errorHandler);
+
+// ─── Start Server ───────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`
   ╔══════════════════════════════════════════════╗
@@ -117,3 +103,5 @@ app.listen(PORT, () => {
   ╚══════════════════════════════════════════════╝
   `);
 });
+
+module.exports = app;

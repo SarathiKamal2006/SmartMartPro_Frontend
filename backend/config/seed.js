@@ -12,18 +12,18 @@ try {
   dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
 } catch (e) {}
 
-const Product = require('./models/Product');
-const Category = require('./models/Category');
-const Order = require('./models/Order');
-const InventoryLog = require('./models/InventoryLog');
-const Supplier = require('./models/Supplier');
-const PurchaseOrder = require('./models/PurchaseOrder');
-const FinanceTransaction = require('./models/FinanceTransaction');
-const StoreSetting = require('./models/StoreSetting');
-const User = require('./models/User');
-const Customer = require('./models/Customer');
-const Delivery = require('./models/Delivery');
-const StockBatch = require('./models/StockBatch');
+const Product = require('../models/Product');
+const Category = require('../models/Category');
+const Order = require('../models/Order');
+const InventoryLog = require('../models/InventoryLog');
+const Supplier = require('../models/Supplier');
+const PurchaseOrder = require('../models/PurchaseOrder');
+const FinanceTransaction = require('../models/FinanceTransaction');
+const StoreSetting = require('../models/StoreSetting');
+const User = require('../models/User');
+const Customer = require('../models/Customer');
+const Delivery = require('../models/Delivery');
+const StockBatch = require('../models/StockBatch');
 
 const CATEGORIES = [
   { categoryId: "cat-all", name: "All Categories", count: 862, icon: "📦" },
