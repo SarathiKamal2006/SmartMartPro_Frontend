@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="surfBarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1565c0"/>
+      <stop offset="60%" stop-color="#1976d2"/>
+      <stop offset="100%" stop-color="#ef6c00"/>
+    </linearGradient>
+  </defs>
+  <rect x="50" y="100" width="300" height="200" rx="20" fill="url(#surfBarGrad)"/>
+  <text x="180" y="180" font-family="Arial, sans-serif" font-weight="900" font-size="38" fill="#ffffff" text-anchor="middle">Surf</text>
+  <text x="180" y="215" font-family="Arial, sans-serif" font-weight="900" font-size="28" fill="#ffeb3b" text-anchor="middle">excel</text>
+  <rect x="250" y="150" width="90" height="40" rx="8" fill="#ffffff"/>
+  <text x="295" y="175" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#d32f2f" text-anchor="middle">STAIN ERASER</text>
+  <text x="200" y="265" font-family="Arial, sans-serif" font-weight="800" font-size="16" fill="#ffffff" text-anchor="middle">DETERGENT BAR</text>
+  <text x="200" y="285" font-family="Arial, sans-serif" font-weight="700" font-size="12" fill="#e3f2fd" text-anchor="middle">400g Value Pack</text>
+</svg>

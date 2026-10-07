@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="mrMuscleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef6c00"/>
+      <stop offset="50%" stop-color="#fb8c00"/>
+      <stop offset="100%" stop-color="#e65100"/>
+    </linearGradient>
+  </defs>
+  <!-- Spray Trigger -->
+  <path d="M 170 30 L 230 30 L 220 70 L 240 80 L 160 80 Z" fill="#d32f2f"/>
+  <rect x="185" y="80" width="30" height="20" fill="#ffffff"/>
+  <!-- Bottle -->
+  <path d="M 160 100 Q 140 140 145 330 Q 145 350 200 350 Q 255 350 255 330 Q 260 140 240 100 Z" fill="url(#mrMuscleGrad)"/>
+  <circle cx="200" cy="180" r="45" fill="#ffffff"/>
+  <text x="200" y="172" font-family="Arial, sans-serif" font-weight="900" font-size="16" fill="#0d47a1" text-anchor="middle">Mr Muscle</text>
+  <text x="200" y="192" font-family="Arial, sans-serif" font-weight="800" font-size="11" fill="#d32f2f" text-anchor="middle">KITCHEN CLEANER</text>
+  <text x="200" y="270" font-family="Arial, sans-serif" font-weight="800" font-size="14" fill="#ffffff" text-anchor="middle">Tough Grease Spray</text>
+  <text x="200" y="310" font-family="Arial, sans-serif" font-weight="700" font-size="12" fill="#ffe0b2" text-anchor="middle">500 ml Spray</text>
+</svg>

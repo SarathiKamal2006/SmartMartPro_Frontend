@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="liaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbc02d"/>
+      <stop offset="50%" stop-color="#fff176"/>
+      <stop offset="100%" stop-color="#f57f17"/>
+    </linearGradient>
+  </defs>
+  <rect x="180" y="45" width="40" height="35" rx="5" fill="#388e3c"/>
+  <rect x="188" y="80" width="24" height="20" fill="#e0e0e0"/>
+  <rect x="145" y="100" width="110" height="250" rx="20" fill="url(#liaGrad)"/>
+  <ellipse cx="200" cy="180" rx="45" ry="35" fill="#ffffff" opacity="0.9"/>
+  <text x="200" y="172" font-family="Arial, sans-serif" font-weight="900" font-size="22" fill="#2e7d32" text-anchor="middle">Cycle</text>
+  <text x="200" y="195" font-family="Arial, sans-serif" font-weight="900" font-size="26" fill="#f57f17" text-anchor="middle">LIA</text>
+  <text x="200" y="240" font-family="Arial, sans-serif" font-weight="800" font-size="16" fill="#1b5e20" text-anchor="middle">ROOM FRESHENER</text>
+  <text x="200" y="260" font-family="Arial, sans-serif" font-weight="700" font-size="14" fill="#d84315" text-anchor="middle">Lemon Burst</text>
+  <circle cx="200" cy="295" r="18" fill="#ffeb3b" stroke="#f57f17" stroke-width="3"/>
+  <path d="M 185 295 L 215 295 M 200 280 L 200 310" stroke="#f57f17" stroke-width="2"/>
+  <text x="200" y="335" font-family="Arial, sans-serif" font-weight="700" font-size="12" fill="#37474f" text-anchor="middle">Net Vol: 140g</text>
+</svg>

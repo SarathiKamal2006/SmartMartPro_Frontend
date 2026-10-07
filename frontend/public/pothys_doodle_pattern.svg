@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <style>
+      /* ─── Warm Sandal / Sandalwood Palette with High Quality Crisp Definition ─── */
+      .doodle { stroke: #ba804e; stroke-width: 2.0; stroke-linecap: round; stroke-linejoin: round; fill: none; opacity: 0.32; }
+      .doodle-fill { fill: #c49260; opacity: 0.10; }
+      .doodle-dot { fill: #ba804e; opacity: 0.38; }
+      .doodle-accent { stroke: #d97706; stroke-width: 2.0; opacity: 0.34; }
+      @media (prefers-color-scheme: dark) {
+        .doodle { stroke: #f59e0b; opacity: 0.24; stroke-width: 1.9; }
+        .doodle-fill { fill: #fbbf24; opacity: 0.08; }
+        .doodle-dot { fill: #f59e0b; opacity: 0.30; }
+        .doodle-accent { stroke: #fbbf24; opacity: 0.26; }
+      }
+    </style>
+  </defs>
+
+  <!-- 🍓 Strawberry (Top Left) -->
+  <g transform="translate(45, 30)">
+    <!-- Body -->
+    <path d="M25 15 C42 15 50 35 45 52 C40 68 28 78 25 80 C22 78 10 68 5 52 C0 35 8 15 25 15 Z" class="doodle doodle-fill"/>
+    <path d="M25 15 C42 15 50 35 45 52 C40 68 28 78 25 80 C22 78 10 68 5 52 C0 35 8 15 25 15 Z" class="doodle"/>
+    <!-- Stem & Calyx Leaves -->
+    <path d="M25 15 C25 6 22 2 18 0" class="doodle"/>
+    <path d="M25 15 C30 8 38 7 42 10 C36 15 31 16 25 15 Z" class="doodle doodle-fill"/>
+    <path d="M25 15 C20 8 12 7 8 10 C14 15 19 16 25 15 Z" class="doodle doodle-fill"/>
+    <path d="M25 15 C25 22 21 26 17 25 C20 20 22 17 25 15 Z" class="doodle"/>
+    <path d="M25 15 C25 22 29 26 33 25 C30 20 28 17 25 15 Z" class="doodle"/>
+    <!-- Seeds -->
+    <circle cx="18" cy="30" r="1.4" class="doodle-dot"/>
+    <circle cx="32" cy="30" r="1.4" class="doodle-dot"/>
+    <circle cx="25" cy="38" r="1.4" class="doodle-dot"/>
+    <circle cx="15" cy="48" r="1.4" class="doodle-dot"/>
+    <circle cx="35" cy="48" r="1.4" class="doodle-dot"/>
+    <circle cx="25" cy="56" r="1.4" class="doodle-dot"/>
+    <circle cx="20" cy="66" r="1.4" class="doodle-dot"/>
+    <circle cx="30" cy="66" r="1.4" class="doodle-dot"/>
+  </g>
+
+  <!-- 🍎 Apple with leaf (Top Center) -->
+  <g transform="translate(145, 35)">
+    <!-- Apple Body -->
+    <path d="M28 14 C35 14 54 18 54 38 C54 62 38 72 28 72 C18 72 2 62 2 38 C2 18 21 14 28 14 Z" class="doodle doodle-fill"/>
+    <path d="M28 14 C35 14 54 18 54 38 C54 62 38 72 28 72 C18 72 2 62 2 38 C2 18 21 14 28 14 Z" class="doodle"/>
+    <path d="M23 15 C26 18 30 18 33 15" class="doodle"/>
+    <!-- Stem -->
+    <path d="M28 14 C28 4 33 0 38 0" class="doodle"/>
+    <!-- Leaf -->
+    <path d="M30 8 C38 4 48 6 50 12 C44 16 34 14 30 8 Z" class="doodle doodle-fill"/>
+    <path d="M30 8 C38 4 48 6 50 12 C44 16 34 14 30 8 Z" class="doodle"/>
+  </g>
+
+  <!-- 🍅 Sliced Tomato (Top Right) -->
+  <g transform="translate(245, 25)">
+    <circle cx="35" cy="35" r="32" class="doodle doodle-fill"/>
+    <circle cx="35" cy="35" r="32" class="doodle"/>
+    <circle cx="35" cy="35" r="24" class="doodle"/>
+    <!-- Center star and seed chambers -->
+    <path d="M35 17 C35 27 30 35 35 35 C40 35 35 27 35 17 Z" class="doodle"/>
+    <path d="M35 53 C35 43 30 35 35 35 C40 35 35 43 35 53 Z" class="doodle"/>
+    <path d="M17 35 C27 35 35 30 35 35 C35 40 27 35 17 35 Z" class="doodle"/>
+    <path d="M53 35 C43 35 35 30 35 35 C35 40 43 35 53 35 Z" class="doodle"/>
+    <!-- Seeds -->
+    <circle cx="26" cy="24" r="1.8" class="doodle-dot"/>
+    <circle cx="44" cy="24" r="1.8" class="doodle-dot"/>
+    <circle cx="26" cy="46" r="1.8" class="doodle-dot"/>
+    <circle cx="44" cy="46" r="1.8" class="doodle-dot"/>
+  </g>
+
+  <!-- 🧄 Garlic Bulb (Right Edge) -->
+  <g transform="translate(330, 30)">
+    <path d="M25 8 C25 0 23 0 20 0 C22 10 12 20 6 32 C0 44 4 56 14 62 C22 66 28 66 36 62 C46 56 50 44 44 32 C38 20 28 10 25 8 Z" class="doodle doodle-fill"/>
+    <path d="M25 8 C25 0 23 0 20 0 C22 10 12 20 6 32 C0 44 4 56 14 62 C22 66 28 66 36 62 C46 56 50 44 44 32 C38 20 28 10 25 8 Z" class="doodle"/>
+    <!-- Segments -->
+    <path d="M25 8 C18 22 14 42 20 63" class="doodle"/>
+    <path d="M25 8 C32 22 36 42 30 63" class="doodle"/>
+    <!-- Roots -->
+    <path d="M22 64 L20 70 M25 65 L25 72 M28 64 L30 70" class="doodle"/>
+  </g>
+
+  <!-- 🔪 Chef's Knife (Middle Center diagonal) -->
+  <g transform="translate(130, 140) rotate(-40)">
+    <!-- Blade -->
+    <path d="M0 10 L65 10 C85 10 105 24 110 28 L0 28 Z" class="doodle doodle-fill"/>
+    <path d="M0 10 L65 10 C85 10 105 24 110 28 L0 28 Z" class="doodle"/>
+    <!-- Handle -->
+    <rect x="-35" y="11" width="35" height="15" rx="3" class="doodle doodle-fill"/>
+    <rect x="-35" y="11" width="35" height="15" rx="3" class="doodle"/>
+    <circle cx="-10" cy="18.5" r="1.8" class="doodle-dot"/>
+    <circle cx="-25" cy="18.5" r="1.8" class="doodle-dot"/>
+  </g>
+
+  <!-- 🥕 Bunch of Carrots (Middle Right) -->
+  <g transform="translate(230, 140)">
+    <!-- Carrot 1 -->
+    <path d="M25 25 C30 25 36 45 32 75 L25 90 L18 75 C14 45 20 25 25 25 Z" class="doodle doodle-fill"/>
+    <path d="M25 25 C30 25 36 45 32 75 L25 90 L18 75 C14 45 20 25 25 25 Z" class="doodle"/>
+    <!-- Texture ridges -->
+    <line x1="20" y1="40" x2="26" y2="40" class="doodle"/>
+    <line x1="24" y1="55" x2="30" y2="55" class="doodle"/>
+    <line x1="22" y1="70" x2="27" y2="70" class="doodle"/>
+    <!-- Carrot 2 (left angle) -->
+    <path d="M12 25 C16 25 18 45 10 70 L5 82 L2 68 C0 42 7 25 12 25 Z" class="doodle doodle-fill"/>
+    <path d="M12 25 C16 25 18 45 10 70 L5 82 L2 68 C0 42 7 25 12 25 Z" class="doodle"/>
+    <!-- Carrot 3 (right angle) -->
+    <path d="M38 25 C42 25 48 45 44 68 L42 80 L36 68 C32 45 34 25 38 25 Z" class="doodle doodle-fill"/>
+    <path d="M38 25 C42 25 48 45 44 68 L42 80 L36 68 C32 45 34 25 38 25 Z" class="doodle"/>
+    <!-- Foliage Greens -->
+    <path d="M25 25 C25 10 20 0 15 0 C20 12 24 18 25 25" class="doodle"/>
+    <path d="M25 25 C28 10 32 0 35 0 C30 12 27 18 25 25" class="doodle"/>
+    <path d="M25 25 C22 14 10 8 5 10 C15 18 20 22 25 25" class="doodle"/>
+    <path d="M25 25 C28 14 40 8 45 10 C35 18 30 22 25 25" class="doodle"/>
+  </g>
+
+  <!-- 🍋 Citrus Wheel / Lemon Slice (Far Right) -->
+  <g transform="translate(325, 145)">
+    <circle cx="30" cy="30" r="28" class="doodle doodle-fill"/>
+    <circle cx="30" cy="30" r="28" class="doodle"/>
+    <circle cx="30" cy="30" r="24" class="doodle"/>
+    <circle cx="30" cy="30" r="4" class="doodle"/>
+    <!-- Segments -->
+    <line x1="30" y1="6" x2="30" y2="26" class="doodle"/>
+    <line x1="30" y1="34" x2="30" y2="54" class="doodle"/>
+    <line x1="6" y1="30" x2="26" y2="30" class="doodle"/>
+    <line x1="34" y1="30" x2="54" y2="30" class="doodle"/>
+    <line x1="13" y1="13" x2="27" y2="27" class="doodle"/>
+    <line x1="33" y1="33" x2="47" y2="47" class="doodle"/>
+    <line x1="47" y1="13" x2="33" y2="27" class="doodle"/>
+    <line x1="27" y1="33" x2="13" y2="47" class="doodle"/>
+  </g>
+
+  <!-- 🍄 Mushroom (Middle Left) -->
+  <g transform="translate(85, 135)">
+    <!-- Cap -->
+    <path d="M10 25 C10 8 42 8 42 25 C34 26 18 26 10 25 Z" class="doodle doodle-fill"/>
+    <path d="M10 25 C10 8 42 8 42 25 C34 26 18 26 10 25 Z" class="doodle"/>
+    <!-- Stem -->
+    <path d="M21 26 L19 40 C19 43 33 43 33 40 L31 26" class="doodle doodle-fill"/>
+    <path d="M21 26 L19 40 C19 43 33 43 33 40 L31 26" class="doodle"/>
+  </g>
+
+  <!-- 🫑 Bell Pepper / Capsicum (Mid-Lower Left) -->
+  <g transform="translate(75, 235)">
+    <path d="M22 10 C14 10 6 18 6 32 C6 48 14 54 22 54 C25 54 28 52 30 52 C32 52 35 54 38 54 C46 54 54 48 54 32 C54 18 46 10 38 10 Z" class="doodle doodle-fill"/>
+    <path d="M22 10 C14 10 6 18 6 32 C6 48 14 54 22 54 C25 54 28 52 30 52 C32 52 35 54 38 54 C46 54 54 48 54 32 C54 18 46 10 38 10 Z" class="doodle"/>
+    <!-- Lobes -->
+    <path d="M22 10 C24 24 24 40 22 54" class="doodle"/>
+    <path d="M38 10 C36 24 36 40 38 54" class="doodle"/>
+    <!-- Stem -->
+    <path d="M30 10 C30 2 35 0 38 0" class="doodle"/>
+  </g>
+
+  <!-- 🧺 Supermarket Grocery Basket (Bottom Center) -->
+  <g transform="translate(180, 245)">
+    <!-- Basket body -->
+    <path d="M6 16 L44 16 L38 42 L12 42 Z" class="doodle doodle-fill"/>
+    <path d="M6 16 L44 16 L38 42 L12 42 Z" class="doodle"/>
+    <!-- Rim -->
+    <rect x="4" y="13" width="42" height="4" rx="2" class="doodle"/>
+    <!-- Handle -->
+    <path d="M14 13 C14 0 36 0 36 13" class="doodle"/>
+    <!-- Slits -->
+    <line x1="16" y1="20" x2="15" y2="38" class="doodle"/>
+    <line x1="22" y1="20" x2="22" y2="38" class="doodle"/>
+    <line x1="28" y1="20" x2="28" y2="38" class="doodle"/>
+    <line x1="34" y1="20" x2="35" y2="38" class="doodle"/>
+  </g>
+
+  <!-- 🍌 Banana (Bottom Right) -->
+  <g transform="translate(280, 240)">
+    <path d="M5 28 C20 42 45 42 55 18 C56 12 52 8 50 10 C42 30 20 30 8 18 C6 16 3 22 5 28 Z" class="doodle doodle-fill"/>
+    <path d="M5 28 C20 42 45 42 55 18 C56 12 52 8 50 10 C42 30 20 30 8 18 C6 16 3 22 5 28 Z" class="doodle"/>
+    <path d="M55 18 L58 14" class="doodle"/>
+  </g>
+
+  <!-- 🥦 Broccoli (Bottom Left) -->
+  <g transform="translate(10, 310)">
+    <!-- Florets -->
+    <path d="M22 25 C14 25 10 18 15 12 C10 6 18 0 25 5 C30 0 40 4 38 12 C44 15 40 25 32 25 Z" class="doodle doodle-fill"/>
+    <path d="M22 25 C14 25 10 18 15 12 C10 6 18 0 25 5 C30 0 40 4 38 12 C44 15 40 25 32 25 Z" class="doodle"/>
+    <!-- Stalk -->
+    <path d="M22 25 L20 40 C20 42 32 42 32 40 L30 25" class="doodle doodle-fill"/>
+    <path d="M22 25 L20 40 C20 42 32 42 32 40 L30 25" class="doodle"/>
+  </g>
+
+  <!-- 🍇 Grapes Cluster (Bottom Right) -->
+  <g transform="translate(340, 310)">
+    <circle cx="15" cy="12" r="5" class="doodle doodle-fill"/>
+    <circle cx="23" cy="10" r="5" class="doodle doodle-fill"/>
+    <circle cx="10" cy="18" r="5" class="doodle doodle-fill"/>
+    <circle cx="18" cy="18" r="5" class="doodle doodle-fill"/>
+    <circle cx="26" cy="18" r="5" class="doodle doodle-fill"/>
+    <circle cx="14" cy="25" r="5" class="doodle doodle-fill"/>
+    <circle cx="22" cy="25" r="5" class="doodle doodle-fill"/>
+    <circle cx="18" cy="32" r="5" class="doodle doodle-fill"/>
+    <!-- Vine stem -->
+    <path d="M19 8 C19 2 24 0 28 0" class="doodle"/>
+  </g>
+</svg>

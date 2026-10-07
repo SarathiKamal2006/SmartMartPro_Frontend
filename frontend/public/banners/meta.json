@@ -1,0 +1,27 @@
+{
+  "banner_fresh_groceries_hero.png": {
+    "width": 1024,
+    "height": 190,
+    "aspectRatio": "5.39"
+  },
+  "banner_vegetables.png": {
+    "width": 1024,
+    "height": 254,
+    "aspectRatio": "4.03"
+  },
+  "banner_fruits.png": {
+    "width": 920,
+    "height": 330,
+    "aspectRatio": "2.79"
+  },
+  "banner_hygiene.png": {
+    "width": 1024,
+    "height": 280,
+    "aspectRatio": "3.66"
+  },
+  "banner_chocolates.png": {
+    "width": 1024,
+    "height": 286,
+    "aspectRatio": "3.58"
+  }
+}

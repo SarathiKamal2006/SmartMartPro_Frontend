@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="pouchYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff176"/>
+      <stop offset="50%" stop-color="#ffee58"/>
+      <stop offset="100%" stop-color="#fdd835"/>
+    </linearGradient>
+  </defs>
+  <!-- Pouch Top Notch -->
+  <polygon points="120,60 280,60 270,75 130,75" fill="#fbc02d"/>
+  <!-- Pouch Body -->
+  <path d="M 125 75 L 275 75 L 285 340 Q 285 355 200 355 Q 115 355 115 340 Z" fill="url(#pouchYellow)" stroke="#f57f17" stroke-width="3"/>
+  <!-- Aachi Oval Logo -->
+  <ellipse cx="200" cy="120" rx="46" ry="18" fill="#c62828"/>
+  <text x="200" y="126" font-family="Arial, sans-serif" font-weight="900" font-size="18" fill="#ffffff" text-anchor="middle">Aachi</text>
+  <!-- Red Banner -->
+  <rect x="135" y="150" width="130" height="45" rx="6" fill="#b71c1c"/>
+  <text x="200" y="170" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#fff176" text-anchor="middle">TOMATO GARLIC</text>
+  <text x="200" y="188" font-family="Arial, sans-serif" font-weight="900" font-size="15" fill="#ffffff" text-anchor="middle">PICKLE</text>
+  <!-- Tomato & Garlic Graphic -->
+  <circle cx="180" cy="245" r="28" fill="#e53935"/>
+  <path d="M 175 218 Q 180 210 185 218 Z" fill="#2e7d32"/>
+  <ellipse cx="222" cy="252" rx="14" ry="20" fill="#fffde7" stroke="#d7ccc8" stroke-width="1.5"/>
+  <!-- Subtext -->
+  <text x="200" y="300" font-family="Arial, sans-serif" font-weight="700" font-size="11" fill="#5d4037" text-anchor="middle">Authentic Pouch Pack</text>
+  <!-- Weight -->
+  <rect x="165" y="318" width="70" height="20" rx="4" fill="#c62828"/>
+  <text x="200" y="332" font-family="Arial, sans-serif" font-weight="800" font-size="11" fill="#ffffff" text-anchor="middle">100 gm</text>
+</svg>

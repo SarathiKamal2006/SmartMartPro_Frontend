@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="disanoYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff176"/>
+      <stop offset="50%" stop-color="#fdd835"/>
+      <stop offset="100%" stop-color="#fbc02d"/>
+    </linearGradient>
+  </defs>
+  <!-- Penne Pasta Pouch Body -->
+  <path d="M 125 60 L 275 60 L 285 340 Q 285 355 200 355 Q 115 355 115 340 Z" fill="url(#disanoYellow)" stroke="#f57f17" stroke-width="2"/>
+  <!-- Disano Logo Oval -->
+  <ellipse cx="200" cy="100" rx="35" ry="20" fill="#1b5e20"/>
+  <text x="200" y="105" font-family="Arial, sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle">DiSano</text>
+  <!-- Red Product Banner -->
+  <rect x="135" y="135" width="130" height="35" rx="6" fill="#c62828"/>
+  <text x="200" y="157" font-family="Arial, sans-serif" font-weight="900" font-size="14" fill="#ffffff" text-anchor="middle">PASTALICIOUS</text>
+  <!-- Window preview with penne pasta shapes -->
+  <rect x="150" y="190" width="100" height="80" rx="10" fill="#fffde7" stroke="#fbc02d" stroke-width="2"/>
+  <polygon points="165,205 185,200 180,240 160,245" fill="#ffe082" stroke="#ffb74d" stroke-width="1.5"/>
+  <polygon points="190,210 210,205 205,245 185,250" fill="#ffe082" stroke="#ffb74d" stroke-width="1.5"/>
+  <polygon points="215,205 235,200 230,240 210,245" fill="#ffe082" stroke="#ffb74d" stroke-width="1.5"/>
+  <!-- PENNE Label -->
+  <text x="200" y="295" font-family="Arial, sans-serif" font-weight="900" font-size="16" fill="#bf360c" text-anchor="middle">PENNE</text>
+  <!-- Net Weight -->
+  <rect x="165" y="320" width="70" height="20" rx="4" fill="#1b5e20"/>
+  <text x="200" y="334" font-family="Arial, sans-serif" font-weight="800" font-size="11" fill="#ffffff" text-anchor="middle">500 gm</text>
+</svg>

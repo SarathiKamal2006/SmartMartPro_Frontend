@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="harpicRedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d32f2f"/>
+      <stop offset="50%" stop-color="#e53935"/>
+      <stop offset="100%" stop-color="#b71c1c"/>
+    </linearGradient>
+  </defs>
+  <rect x="180" y="45" width="40" height="35" rx="5" fill="#e0e0e0"/>
+  <path d="M 175 75 Q 120 120 130 330 Q 130 350 200 350 Q 270 350 270 330 Q 280 120 225 75 Z" fill="url(#harpicRedGrad)"/>
+  <path d="M 150 140 L 250 140 L 240 230 L 200 250 L 160 230 Z" fill="#ffffff"/>
+  <text x="200" y="180" font-family="Arial, sans-serif" font-weight="900" font-size="24" fill="#0d47a1" text-anchor="middle">HARPIC</text>
+  <text x="200" y="200" font-family="Arial, sans-serif" font-weight="800" font-size="11" fill="#d32f2f" text-anchor="middle">BATHROOM CLEANER</text>
+  <text x="200" y="290" font-family="Arial, sans-serif" font-weight="800" font-size="16" fill="#ffffff" text-anchor="middle">Floral Red</text>
+  <text x="200" y="320" font-family="Arial, sans-serif" font-weight="700" font-size="12" fill="#ffcdd2" text-anchor="middle">Net Vol: 500 ml</text>
+</svg>

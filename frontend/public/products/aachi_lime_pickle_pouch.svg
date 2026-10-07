@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="limeBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff59d"/>
+      <stop offset="50%" stop-color="#ffee58"/>
+      <stop offset="100%" stop-color="#fdd835"/>
+    </linearGradient>
+  </defs>
+  <!-- Pouch Body -->
+  <path d="M 125 70 L 275 70 L 285 340 Q 285 355 200 355 Q 115 355 115 340 Z" fill="url(#limeBg)" stroke="#f57f17" stroke-width="2"/>
+  <!-- Red Arc Logo Header -->
+  <path d="M 145 95 Q 200 80 255 95 L 255 130 Q 200 145 145 130 Z" fill="#c62828"/>
+  <text x="200" y="118" font-family="Arial, sans-serif" font-weight="900" font-size="20" fill="#ffffff" text-anchor="middle">Aachi</text>
+  <!-- Product Banner -->
+  <rect x="140" y="150" width="120" height="40" rx="4" fill="#b71c1c"/>
+  <text x="200" y="175" font-family="Arial, sans-serif" font-weight="900" font-size="16" fill="#fff59d" text-anchor="middle">LIME PICKLE</text>
+  <!-- Fresh Yellow Lemons & Green Lime Slice -->
+  <circle cx="170" cy="245" r="22" fill="#ffee58" stroke="#fbc02d" stroke-width="2"/>
+  <circle cx="215" cy="245" r="22" fill="#fff59d" stroke="#fbc02d" stroke-width="2"/>
+  <circle cx="200" cy="265" r="18" fill="#7cb342" stroke="#33691e" stroke-width="2"/>
+  <!-- Net Weight -->
+  <rect x="165" y="320" width="70" height="20" rx="4" fill="#c62828"/>
+  <text x="200" y="334" font-family="Arial, sans-serif" font-weight="800" font-size="11" fill="#ffffff" text-anchor="middle">100 gm</text>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="saffolaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff9800"/>
+      <stop offset="50%" stop-color="#f57c00"/>
+      <stop offset="100%" stop-color="#e65100"/>
+    </linearGradient>
+  </defs>
+  <!-- Mega Pack Bag -->
+  <path d="M 125 55 L 275 55 L 285 340 Q 285 355 200 355 Q 115 355 115 340 Z" fill="url(#saffolaGrad)"/>
+  <!-- Top Badge -->
+  <rect x="135" y="65" width="60" height="25" rx="4" fill="#2e7d32"/>
+  <text x="165" y="81" font-family="Arial, sans-serif" font-weight="900" font-size="10" fill="#ffffff" text-anchor="middle">MEGA PACK</text>
+  <!-- Saffola Oval Logo -->
+  <ellipse cx="200" cy="120" rx="45" ry="24" fill="#ffffff" stroke="#d32f2f" stroke-width="2"/>
+  <text x="200" y="123" font-family="Arial, sans-serif" font-weight="900" font-size="18" fill="#d32f2f" text-anchor="middle">Saffola</text>
+  <text x="200" y="138" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#2e7d32" text-anchor="middle">masala oats</text>
+  <!-- Flavor Tag -->
+  <rect x="135" y="170" width="130" height="30" fill="#d32f2f"/>
+  <text x="200" y="190" font-family="Arial, sans-serif" font-weight="900" font-size="14" fill="#ffeb3b" text-anchor="middle">Classic Masala</text>
+  <!-- Bowl of Masala Oats Graphic -->
+  <ellipse cx="200" cy="255" rx="42" ry="22" fill="#ffb74d"/>
+  <ellipse cx="200" cy="250" rx="38" ry="18" fill="#e65100"/>
+  <text x="200" y="305" font-family="Arial, sans-serif" font-weight="700" font-size="11" fill="#ffffff" text-anchor="middle">3-Min Anytime Snack</text>
+  <!-- Weight Tag -->
+  <rect x="165" y="322" width="70" height="20" rx="4" fill="#ffffff"/>
+  <text x="200" y="336" font-family="Arial, sans-serif" font-weight="800" font-size="11" fill="#d32f2f" text-anchor="middle">500 gm</text>
+</svg>
