@@ -213,7 +213,11 @@ export default function InvoiceModal() {
               <div className="flex justify-between items-center text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-2 py-1 rounded-lg">
                 <span className="flex items-center gap-1 text-[10px]">
                   <Tag className="w-3 h-3" />
-                  <span>Coupon Discount:</span>
+                  <span>
+                    {details.appliedDiscount?.promoCode 
+                      ? `Promo (${details.appliedDiscount.promoCode}):` 
+                      : 'Discount Savings:'}
+                  </span>
                 </span>
                 <span className="font-mono font-black text-[10px]">-{symbol}{details.discount.toFixed(2)}</span>
               </div>

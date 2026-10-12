@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="kelMuesli" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d32f2f"/>
+      <stop offset="50%" stop-color="#b71c1c"/>
+      <stop offset="100%" stop-color="#00838f"/>
+    </linearGradient>
+  </defs>
+  <!-- Pouch Body -->
+  <path d="M 125 55 L 275 55 L 285 340 Q 285 355 200 355 Q 115 355 115 340 Z" fill="url(#kelMuesli)"/>
+  <!-- Kellogg's Script Logo -->
+  <text x="200" y="105" font-family="Brush Script MT, cursive, Arial" font-weight="900" font-size="34" fill="#ffffff" text-anchor="middle">Kellogg's</text>
+  <!-- Muesli Title Header -->
+  <text x="200" y="140" font-family="Arial, sans-serif" font-weight="900" font-size="20" fill="#ffffff" text-anchor="middle">MUESLI</text>
+  <text x="200" y="160" font-family="Arial, sans-serif" font-weight="800" font-size="14" fill="#00e5ff" text-anchor="middle">FRUIT MAGIC</text>
+  <!-- 12 in 1 Badge -->
+  <circle cx="245" cy="200" r="24" fill="#00838f" stroke="#ffffff" stroke-width="2"/>
+  <text x="245" y="198" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#ffffff" text-anchor="middle">12 in 1</text>
+  <text x="245" y="210" font-family="Arial, sans-serif" font-weight="700" font-size="8" fill="#e0f7fa" text-anchor="middle">POWER</text>
+  <!-- Muesli Bowl Graphic -->
+  <circle cx="180" cy="255" r="38" fill="#fffde7" stroke="#00838f" stroke-width="2"/>
+  <circle cx="180" cy="255" r="30" fill="#ffecb3"/>
+  <!-- Net Weight -->
+  <rect x="165" y="320" width="70" height="20" rx="4" fill="#ffffff"/>
+  <text x="200" y="334" font-family="Arial, sans-serif" font-weight="800" font-size="11" fill="#b71c1c" text-anchor="middle">500 gm</text>
+</svg>

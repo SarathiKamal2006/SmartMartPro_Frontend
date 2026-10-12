@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="pouchBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#29b6f6"/>
+      <stop offset="50%" stop-color="#0288d1"/>
+      <stop offset="100%" stop-color="#01579b"/>
+    </linearGradient>
+  </defs>
+  <!-- Spout Cap -->
+  <rect x="185" y="30" width="30" height="25" rx="4" fill="#e53935"/>
+  <rect x="180" y="55" width="40" height="15" fill="#c62828"/>
+  <!-- Pouch Body -->
+  <path d="M 140 70 L 260 70 Q 280 100 280 320 Q 280 345 200 345 Q 120 345 120 320 Q 120 100 140 70 Z" fill="url(#pouchBlue)"/>
+  <!-- Kissan Logo -->
+  <path d="M 155 100 Q 200 85 245 100 L 245 135 Q 200 150 155 135 Z" fill="#d32f2f"/>
+  <text x="200" y="125" font-family="Arial, sans-serif" font-weight="900" font-size="22" fill="#ffffff" text-anchor="middle">Kissan</text>
+  <!-- Schezwan Banner -->
+  <rect x="145" y="160" width="110" height="35" rx="6" fill="#111111"/>
+  <text x="200" y="183" font-family="Arial, sans-serif" font-weight="900" font-size="14" fill="#ffeb3b" text-anchor="middle">SCHEZWAN</text>
+  <text x="200" y="210" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#ffffff" text-anchor="middle">SAUCE</text>
+  <!-- Bowl of Noodles / Chilli Graphic -->
+  <ellipse cx="200" cy="255" rx="35" ry="18" fill="#e53935"/>
+  <path d="M 170 255 Q 200 280 230 255 Z" fill="#b71c1c"/>
+  <!-- Side Weight Tag -->
+  <rect x="235" y="275" width="40" height="40" rx="6" fill="#d32f2f"/>
+  <text x="255" y="298" font-family="Arial, sans-serif" font-weight="900" font-size="11" fill="#ffffff" text-anchor="middle">200g</text>
+</svg>

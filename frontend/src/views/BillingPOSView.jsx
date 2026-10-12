@@ -3,6 +3,7 @@ import { useApp } from '../context/AppContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useSoundEffects } from '../hooks/useCustomHooks';
 import BarcodeScannerModal from '../components/BarcodeScannerModal';
+import DiscountPromoModal from '../components/DiscountPromoModal';
 import { 
   Barcode, 
   Plus, 
@@ -15,7 +16,10 @@ import {
   Scan,
   Tag,
   Zap,
-  ShieldCheck
+  ShieldCheck,
+  Percent,
+  Sparkles,
+  TicketPercent
 } from 'lucide-react';
 
 export default function BillingPOSView() {
@@ -35,6 +39,10 @@ export default function BillingPOSView() {
     initiateRazorpayPOSCheckout,
     scannerModalOpen,
     setScannerModalOpen,
+    discountModalOpen,
+    setDiscountModalOpen,
+    appliedDiscount,
+    setAppliedDiscount,
     showToast
   } = useApp();
 
@@ -174,14 +182,32 @@ export default function BillingPOSView() {
                         <td className="py-3 text-right font-semibold">₹{item.product.price.toFixed(2)}</td>
                         <td className="py-3 text-right font-black text-emerald-600 dark:text-emerald-400">
                           ₹{(item.product.price * item.quantity).toFixed(2)}
+                          {appliedDiscount?.itemDiscounts?.[item.product.id] > 0 && (
+                            <span className="block text-[10px] text-red-500 font-bold">
+                              -{appliedDiscount.itemDiscountUnits?.[item.product.id] === 'flat' ? '₹' : ''}
+                              {appliedDiscount.itemDiscounts[item.product.id]}
+                              {appliedDiscount.itemDiscountUnits?.[item.product.id] !== 'flat' ? '%' : ''} OFF
+                            </span>
+                          )}
                         </td>
                         <td className="py-3 text-right">
-                          <button
-                            onClick={() => { playBeep(); removeFromCart(item.product.id); }}
-                            className="p-1.5 text-slate-400 hover:text-rose-600 transition-colors"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
+                          <div className="flex items-center justify-end gap-1">
+                            <button
+                              type="button"
+                              title="Apply Item-Level Discount (Fig 8.5.3)"
+                              onClick={() => { playClick(); setDiscountModalOpen(true); }}
+                              className="p-1.5 text-slate-400 hover:text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-950/40 rounded-lg transition-colors"
+                            >
+                              <Percent className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => { playBeep(); removeFromCart(item.product.id); }}
+                              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -189,6 +215,55 @@ export default function BillingPOSView() {
                 </table>
               </div>
             )}
+          </div>
+
+          {/* Discount & Promo Code Bar (Fig 8.5.3) */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-red-500/10 dark:from-amber-950/30 dark:via-orange-950/30 dark:to-red-950/30 rounded-2xl border border-amber-200/80 dark:border-amber-800/40">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center font-black shadow-md shadow-amber-500/20">
+                <TicketPercent className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">Fig 8.5.3 Discount & Promo Code</span>
+                  <span className="text-[10px] bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300 font-extrabold px-2 py-0.5 rounded-full">Cashier Control</span>
+                </div>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                  {cartTotals.discount > 0 ? (
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+                      Active: {appliedDiscount?.promoCode ? `Promo "${appliedDiscount.promoCode}"` : 'Custom Discounts'} • Saved ₹{cartTotals.discount.toFixed(2)}
+                    </span>
+                  ) : (
+                    'Apply item-level markdowns or bill-level promo codes with live payable calculation.'
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              {cartTotals.discount > 0 && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    playClick();
+                    setAppliedDiscount({ billDiscountType: 'percentage', billDiscountValue: 0, promoCode: '', itemDiscounts: {}, itemDiscountUnits: {} });
+                    showToast({ title: 'Discounts Cleared', message: 'All promos and markdowns have been removed', type: 'info', duration: 2000 });
+                  }}
+                  className="px-3 py-2 text-xs font-bold text-slate-500 hover:text-red-600 bg-white/80 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 transition-colors"
+                >
+                  Clear
+                </button>
+              )}
+              <button
+                type="button"
+                id="open-discount-dialog-btn"
+                onClick={() => { playClick(); setDiscountModalOpen(true); }}
+                className="flex-1 sm:flex-none px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs rounded-xl shadow-md shadow-amber-500/20 flex items-center justify-center gap-2 transition-transform active:scale-95 cursor-pointer"
+              >
+                <Tag className="w-3.5 h-3.5" />
+                <span>{cartTotals.discount > 0 ? 'Edit Discount / Promo' : 'Apply Discount / Promo'}</span>
+              </button>
+            </div>
           </div>
 
           {/* Subtotal Calculation Box */}
@@ -204,7 +279,10 @@ export default function BillingPOSView() {
               </div>
               {cartTotals.discount > 0 && (
                 <div className="flex gap-4 text-emerald-600 dark:text-emerald-400">
-                  <span>SmartMart Coupon Discount:</span>
+                  <span className="flex items-center gap-1 font-bold">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    Discount Savings:
+                  </span>
                   <span className="font-extrabold">-₹{cartTotals.discount.toFixed(2)}</span>
                 </div>
               )}
@@ -329,6 +407,12 @@ export default function BillingPOSView() {
         ref={scannerRef}
         isOpen={scannerModalOpen}
         onClose={() => setScannerModalOpen(false)}
+      />
+
+      {/* Fig 8.5.3 Discount and Promo Code Dialog */}
+      <DiscountPromoModal
+        isOpen={discountModalOpen}
+        onClose={() => setDiscountModalOpen(false)}
       />
     </div>
   );

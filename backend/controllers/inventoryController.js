@@ -16,7 +16,7 @@ const getInventoryLogs = async (req, res) => {
 // @route   POST /api/inventory/adjust
 const adjustInventory = async (req, res) => {
   try {
-    const { productId, sku, action, change, branch, note, performedBy } = req.body;
+    const { productId, sku, action, change, branch, note, performedBy, batchNo, reason } = req.body;
     if (!sku && !productId) {
       return res.status(400).json({ success: false, message: 'Product ID or SKU is required.' });
     }
@@ -38,10 +38,12 @@ const adjustInventory = async (req, res) => {
       logId: `LOG-${Math.floor(1000 + Math.random() * 9000)}`,
       sku: product.sku,
       productName: product.name,
-      action: action || (qtyChange > 0 ? 'Restock' : 'Damage Adjustment'),
+      action: action || (qtyChange > 0 ? 'Manual Add' : 'Manual Remove'),
+      reason: reason || (qtyChange > 0 ? 'Restock / Correction' : 'Damage Adjustment'),
+      batchNo: batchNo || product.batchNo || 'BATCH-2027-A',
       change: qtyChange,
       newStock: product.stock,
-      branch: branch || product.branch,
+      branch: branch || product.branch || 'Chennai Central Superstore (Main)',
       performedBy: performedBy || 'Sarathi Kamal N (Store Manager)',
       note: note || ''
     });

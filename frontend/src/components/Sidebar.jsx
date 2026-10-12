@@ -29,12 +29,12 @@ import {
 } from 'lucide-react';
 
 export const ROLE_VIEWS = {
-  'Super Admin': ['dashboard', 'products', 'inventory', 'billing', 'deliveries', 'suppliers', 'customers', 'employees', 'warehouse', 'accountant', 'reports', 'aiForecasting', 'settings'],
-  'Branch Manager': ['dashboard', 'products', 'inventory', 'employees', 'warehouse', 'suppliers', 'accountant', 'reports', 'aiForecasting', 'settings'],
+  'Super Admin': ['dashboard', 'customerStorefront', 'products', 'inventory', 'billing', 'deliveries', 'suppliers', 'customers', 'employees', 'warehouse', 'accountant', 'reports', 'aiForecasting', 'settings'],
+  'Branch Manager': ['dashboard', 'customerStorefront', 'products', 'inventory', 'employees', 'warehouse', 'suppliers', 'accountant', 'reports', 'aiForecasting', 'settings'],
   'Inventory Manager': ['products', 'inventory', 'warehouse', 'suppliers', 'aiForecasting'],
   'Cashier': ['billing', 'products', 'customers'],
   'Supplier': ['suppliers'],
-  'Customer': ['products', 'deliveries', 'aiForecasting'],
+  'Customer': ['customerStorefront', 'products', 'deliveries'],
   'Warehouse Staff': ['warehouse'],
   'Delivery Partner': ['deliveries'],
   'Accountant': ['accountant', 'reports']
@@ -48,10 +48,11 @@ export default function Sidebar() {
 
   const allNavItems = [
     { id: 'dashboard', label: t('dashboard'), icon: LayoutDashboard },
+    { id: 'customerStorefront', label: t('customerStorefront') || 'Online Storefront', icon: ShoppingBag },
     { id: 'products', label: t('products'), icon: Package },
     { id: 'inventory', label: t('inventory'), icon: Boxes },
     { id: 'billing', label: t('billing'), icon: Receipt, highlight: true },
-    { id: 'deliveries', label: t('deliveries'), icon: Bike, badge: 'OTP Fleet' },
+    { id: 'deliveries', label: 'Delivery Dispatcher', icon: Bike },
     { id: 'suppliers', label: t('suppliers'), icon: Truck },
     { id: 'customers', label: t('customers'), icon: Users },
     { id: 'employees', label: t('employees'), icon: UserCheck },
@@ -62,14 +63,14 @@ export default function Sidebar() {
     { id: 'settings', label: t('settings'), icon: Settings },
   ];
 
-  const allowedViews = ROLE_VIEWS[user?.role] || ['dashboard', 'products', 'aiForecasting'];
+  const allowedViews = ROLE_VIEWS[user?.role] || ['customerStorefront', 'products', 'deliveries'];
   const navItems = allNavItems.filter(item => allowedViews.includes(item.id));
 
   const VIEW_LABELS = {
-    dashboard: 'Dashboard', products: 'Products Catalog', inventory: 'Inventory & Stock',
-    billing: 'Billing & POS', deliveries: 'Delivery Fleet & OTP', suppliers: 'Suppliers & POs',
+    dashboard: 'Dashboard', customerStorefront: 'Omnichannel Storefront', products: 'Products Catalog', inventory: 'Inventory & Stock',
+    billing: 'Billing & POS', deliveries: 'Delivery Dispatcher Screen', suppliers: 'Suppliers & POs',
     customers: 'Customers & CRM', employees: 'Employees & Roster', warehouse: 'Warehouse & Logistics',
-    accountant: 'Accounting & GST', reports: 'Financial Reports', aiForecasting: 'AI Engine & Insights',
+    accountant: 'Accounting & GST', reports: 'Financial Reports', aiForecasting: 'Smart Reorders & AI Engine',
     settings: 'Settings',
   };
 

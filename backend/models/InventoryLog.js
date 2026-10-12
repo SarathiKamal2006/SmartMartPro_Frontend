@@ -15,8 +15,15 @@ const inventoryLogSchema = new mongoose.Schema({
   },
   action: {
     type: String,
-    enum: ['Restock', 'POS Sale', 'Online Order', 'Damage Adjustment', 'Branch Transfer', 'Stock Update'],
-    required: true
+    default: 'Manual Adjustment'
+  },
+  reason: {
+    type: String,
+    default: 'Audit Correction'
+  },
+  batchNo: {
+    type: String,
+    default: ''
   },
   change: {
     type: Number,

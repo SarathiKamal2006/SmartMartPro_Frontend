@@ -50,10 +50,10 @@ export default function SplashScreen({ onDone }) {
           {/* Core Emblem Badge */}
           <div className="relative w-32 h-32 rounded-3xl p-2 bg-white/95 ring-2 ring-emerald-400/70 shadow-2xl shadow-emerald-500/40 overflow-hidden flex items-center justify-center">
             <img 
-              src="/@fs/C:/Users/sarat/.gemini/antigravity-ide/brain/3fc5a59a-2f99-4f0b-9a42-b62dd25c66f2/.user_uploaded/media_1791118183787.png"
+              src="/smartmart_logo.png"
               alt="SmartMart Pro Official Logo" 
               className="w-full h-full object-contain"
-              onError={(e) => { e.target.src = '/smartmart_logo.png'; }}
+              onError={(e) => { e.target.src = '/dashboard_grocery_basket.png'; }}
             />
           </div>
           {/* Subtle reflection floor */}

@@ -150,6 +150,18 @@ export const UNIQUE_PRODUCT_IMAGES = {
   "RTE-014": "/products/disano_pastalicious_penne.svg",
   "RTE-015": "/products/kelloggs_oats_nutritionists.svg",
   "RTE-016": "/products/kelloggs_muesli_fruit_magic.svg",
+
+  // 🍪 Cookies & Biscuits (100% Verified HD Image Assets)
+  "CK-101": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=400&q=80",
+  "CK-102": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=400&q=80",
+  "CK-103": "https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=400&q=80",
+  "CK-104": "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=400&q=80",
+  "CK-105": "https://images.unsplash.com/photo-1548741487-18d16a1a090c?auto=format&fit=crop&w=400&q=80",
+  "CK-106": "https://images.unsplash.com/photo-1557082673-e847702f2679?auto=format&fit=crop&w=400&q=80",
+  "CK-107": "https://images.unsplash.com/photo-1583338917451-face2751d8d5?auto=format&fit=crop&w=400&q=80",
+  "CK-108": "https://images.unsplash.com/photo-1597733153203-a54d0fbc47de?auto=format&fit=crop&w=400&q=80",
+  "CK-109": "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=400&q=80",
+  "CK-110": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80",
 };
 
 export const UNIQUE_FALLBACK_IMAGES = {

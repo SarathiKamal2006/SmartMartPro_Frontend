@@ -41,6 +41,7 @@ import {
 
 const CATALOG_CATEGORY_CARDS = [
   { id: 'cat-all', name: 'All', image: '/dashboard_grocery_basket.png' },
+  { id: 'cat-cookies', name: 'Cookies & Biscuits', image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=400&q=80' },
   { id: 'cat-produce', name: 'Fruits & Vegetables', image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=400&q=80' },
   { id: 'cat-staples', name: 'Staples', image: '/categories/cat_staples.png' },
   { id: 'cat-snacks', name: 'Snacks & Namkeens', image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?auto=format&fit=crop&w=400&q=80' },
@@ -56,14 +57,21 @@ const CATALOG_CATEGORY_CARDS = [
 ];
 
 export default function ProductsView() {
-  const { products, addProduct, deleteProduct, addToCart } = useApp();
+  const { products, addProduct, deleteProduct, addToCart, searchTerm, setSearchTerm, deferredSearchTerm } = useApp();
   const { playClick, playSuccess, playBeep } = useSoundEffects();
   
   const [viewMode, setViewMode] = useState('grid');
   const [selectedCat, setSelectedCat] = useState('All');
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(searchTerm || '');
   const [selectedProductDetails, setSelectedProductDetails] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
+
+  // Sync internal search with global search term
+  useEffect(() => {
+    if (searchTerm !== undefined && searchTerm !== search) {
+      setSearch(searchTerm);
+    }
+  }, [searchTerm]);
 
   // Banner carousel state
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
@@ -137,15 +145,18 @@ export default function ProductsView() {
   });
 
   const matchesCategory = (prodCategory, targetCat) => {
-    if (!targetCat || targetCat === 'All' || targetCat === 'All Categories') return true;
+    if (!targetCat || targetCat === 'All' || targetCat === 'All Categories' || targetCat === 'cat-all') return true;
     if (!prodCategory) return false;
     const pCat = prodCategory.toLowerCase();
     const tCat = targetCat.toLowerCase();
     if (pCat === tCat) return true;
+    if (tCat.includes('cookie') || tCat.includes('biscuit')) {
+      return pCat.includes('cookie') || pCat.includes('biscuit') || pCat.includes('snack') || pCat.includes('bakery');
+    }
     if (tCat.includes('staple') && (pCat.includes('staple') || pCat.includes('rice') || pCat.includes('grain') || pCat.includes('dal') || pCat.includes('flour') || pCat.includes('oil'))) return true;
     if (tCat.includes('rice') && pCat.includes('rice')) return true;
     if (tCat.includes('dairy') && (pCat.includes('dairy') || pCat.includes('butter') || pCat.includes('paneer') || pCat.includes('cheese'))) return true;
-    if (tCat.includes('snack') && (pCat.includes('snack') || pCat.includes('pantry') || pCat.includes('chocolate') || pCat.includes('namkeen'))) return true;
+    if (tCat.includes('snack') && (pCat.includes('snack') || pCat.includes('pantry') || pCat.includes('chocolate') || pCat.includes('namkeen') || pCat.includes('cookie') || pCat.includes('biscuit'))) return true;
     if (tCat.includes('beverage') && (pCat.includes('beverage') || pCat.includes('tea') || pCat.includes('coffee') || pCat.includes('drink'))) return true;
     if (tCat.includes('clean') && (pCat.includes('clean') || pCat.includes('wash') || pCat.includes('detergent'))) return true;
     if (tCat.includes('household') && (pCat.includes('household') || pCat.includes('essential'))) return true;
@@ -157,10 +168,16 @@ export default function ProductsView() {
 
   const filteredProducts = allCombinedProducts.filter(p => {
     const matchesCat = matchesCategory(p.category, selectedCat);
-    const matchesSearch = !deferredSearch || 
-      (p.name && p.name.toLowerCase().includes(deferredSearch.toLowerCase())) || 
-      (p.sku && p.sku.toLowerCase().includes(deferredSearch.toLowerCase())) ||
-      (p.category && p.category.toLowerCase().includes(deferredSearch.toLowerCase()));
+    const effectiveQ = (deferredSearch || deferredSearchTerm || '').trim().toLowerCase();
+    if (!effectiveQ) return matchesCat;
+    
+    const matchesSearch = 
+      (p.name && p.name.toLowerCase().includes(effectiveQ)) || 
+      (p.sku && p.sku.toLowerCase().includes(effectiveQ)) ||
+      (p.category && p.category.toLowerCase().includes(effectiveQ)) ||
+      (p.brand && p.brand.toLowerCase().includes(effectiveQ)) ||
+      (p.supplier && p.supplier.toLowerCase().includes(effectiveQ)) ||
+      ((effectiveQ.includes('cookie') || effectiveQ.includes('biscuit')) && ((p.name || '').toLowerCase().includes('cookie') || (p.name || '').toLowerCase().includes('biscuit') || (p.category || '').toLowerCase().includes('cookie')));
     return matchesCat && matchesSearch;
   });
 

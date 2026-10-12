@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="mgPickle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d84315"/>
+      <stop offset="50%" stop-color="#bf360c"/>
+      <stop offset="100%" stop-color="#4e342e"/>
+    </linearGradient>
+  </defs>
+  <!-- Red Lid -->
+  <rect x="140" y="45" width="120" height="45" rx="10" fill="#c62828" stroke="#8e0000" stroke-width="2"/>
+  <!-- Glass Jar Body -->
+  <path d="M 140 95 L 260 95 L 270 330 Q 270 350 200 350 Q 130 350 130 330 Z" fill="url(#mgPickle)"/>
+  <!-- Yellow Aachi Label -->
+  <rect x="135" y="145" width="130" height="120" fill="#fff59d" stroke="#fbc02d" stroke-width="2"/>
+  <ellipse cx="200" cy="170" rx="38" ry="15" fill="#c62828"/>
+  <text x="200" y="175" font-family="Arial, sans-serif" font-weight="900" font-size="15" fill="#ffffff" text-anchor="middle">Aachi</text>
+  <!-- Title -->
+  <text x="200" y="202" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#1b5e20" text-anchor="middle">MANGO GINGER</text>
+  <text x="200" y="218" font-family="Arial, sans-serif" font-weight="900" font-size="14" fill="#b71c1c" text-anchor="middle">PICKLE</text>
+  <!-- Ginger Root Graphic -->
+  <path d="M 175 245 Q 185 230 200 240 Q 215 235 220 250 Z" fill="#d7ccc8" stroke="#8d6e63" stroke-width="2"/>
+  <!-- Net Weight -->
+  <rect x="165" y="320" width="70" height="20" rx="4" fill="#ffffff" opacity="0.9"/>
+  <text x="200" y="334" font-family="Arial, sans-serif" font-weight="800" font-size="11" fill="#333333" text-anchor="middle">200 gm</text>
+</svg>

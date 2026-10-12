@@ -12,9 +12,48 @@ import {
 } from 'lucide-react';
 
 export default function FinanceReportsView() {
-  const { transactions } = useApp();
-  const { playClick } = useSoundEffects();
+  const { transactions, showToast } = useApp();
+  const { playClick, playSuccess } = useSoundEffects();
   const { t } = useLanguage();
+
+  const handleExportPDF = () => {
+    playClick();
+    window.print();
+  };
+
+  const handleExportExcel = () => {
+    playClick();
+    const rows = (transactions || []).map(t => [
+      `"${t.id || ''}"`,
+      `"${t.orderId || ''}"`,
+      `"${t.date || ''}"`,
+      `"${t.customer || 'Walk-in'}"`,
+      `"${t.method || 'Cash'}"`,
+      (t.amount || 0).toFixed(2),
+      `"${t.status || 'Completed'}"`
+    ]);
+
+    const headers = ['Transaction ID', 'Order ID', 'Date', 'Customer', 'Payment Method', 'Amount (INR)', 'Status'];
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\r\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `SmartMart_Financial_Report_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    playSuccess();
+    if (showToast) {
+      showToast({
+        title: 'Report Downloaded! 📊',
+        message: 'Financial ledger report exported successfully.',
+        type: 'success',
+        category: 'finance'
+      });
+    }
+  };
 
   return (
     <div className="space-y-6 font-sans">
@@ -26,15 +65,17 @@ export default function FinanceReportsView() {
         </div>
         <div className="flex items-center gap-2">
           <button 
-            onClick={playClick}
-            className="px-3.5 py-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold flex items-center gap-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all shadow-sm"
+            type="button"
+            onClick={handleExportPDF}
+            className="px-3.5 py-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold flex items-center gap-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all shadow-sm active:scale-95 cursor-pointer"
           >
             <FileText className="w-3.5 h-3.5 text-rose-600" />
             <span>{t("EXPORT PDF")}</span>
           </button>
           <button 
-            onClick={playClick}
-            className="px-3.5 py-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-emerald-600/20"
+            type="button"
+            onClick={handleExportExcel}
+            className="px-3.5 py-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-emerald-600/20 active:scale-95 cursor-pointer"
           >
             <FileSpreadsheet className="w-3.5 h-3.5" />
             <span>{t("EXPORT EXCEL")}</span>

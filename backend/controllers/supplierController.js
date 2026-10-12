@@ -15,7 +15,7 @@ const getSuppliers = async (req, res) => {
 // @route   POST /api/suppliers
 const createSupplier = async (req, res) => {
   try {
-    const { name, contactPerson, email, phone, address, category, rating, activeStatus } = req.body;
+    const { name, contactPerson, email, phone, address, category, paymentTerms, rating, activeStatus } = req.body;
     if (!name) {
       return res.status(400).json({ success: false, message: 'Supplier name is required.' });
     }
@@ -30,6 +30,7 @@ const createSupplier = async (req, res) => {
       phone: phone || '',
       address: address || '',
       category: category || 'General Produce',
+      paymentTerms: paymentTerms || 'Net 30 Days',
       rating: Number(rating || 4.8),
       activeStatus: activeStatus || 'Active'
     });

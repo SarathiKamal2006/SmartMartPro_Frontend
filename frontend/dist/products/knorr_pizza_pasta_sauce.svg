@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="knorrBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#43a047"/>
+      <stop offset="40%" stop-color="#2e7d32"/>
+      <stop offset="100%" stop-color="#1b5e20"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Glow -->
+  <rect width="400" height="400" fill="url(#knorrBg)"/>
+  <!-- Pouch Container -->
+  <path d="M 135 60 L 265 60 Q 280 80 275 330 Q 275 350 200 350 Q 125 350 125 330 Q 120 80 135 60 Z" fill="#ffffff"/>
+  <!-- Knorr Green Banner -->
+  <path d="M 140 70 Q 200 55 260 70 L 260 115 Q 200 130 140 115 Z" fill="#2e7d32"/>
+  <text x="200" y="102" font-family="Brush Script MT, cursive, Arial" font-weight="900" font-size="28" fill="#ffffff" text-anchor="middle">Knorr</text>
+  <!-- Red Product Title -->
+  <rect x="145" y="135" width="110" height="45" rx="6" fill="#d32f2f"/>
+  <text x="200" y="156" font-family="Arial, sans-serif" font-weight="900" font-size="14" fill="#ffffff" text-anchor="middle">Pizza &amp; Pasta</text>
+  <text x="200" y="172" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#ffeb3b" text-anchor="middle">SAUCE</text>
+  <!-- Pasta / Pizza Plate Graphic -->
+  <circle cx="200" cy="245" r="40" fill="#e53935"/>
+  <circle cx="200" cy="245" r="32" fill="#ff7043"/>
+  <text x="200" y="310" font-family="Arial, sans-serif" font-weight="700" font-size="11" fill="#333333" text-anchor="middle">Cook • Spread • Dip</text>
+  <!-- Weight Tag -->
+  <rect x="165" y="322" width="70" height="20" rx="4" fill="#2e7d32"/>
+  <text x="200" y="336" font-family="Arial, sans-serif" font-weight="800" font-size="11" fill="#ffffff" text-anchor="middle">200 gm</text>
+</svg>

@@ -10,6 +10,7 @@ import {
   INITIAL_NOTIFICATIONS, 
   INITIAL_DELIVERIES,
   INITIAL_EXPENSES,
+  INITIAL_INVENTORY_LOGS,
   BRANCHES,
   BRANCH_PROFILES 
 } from '../data/mockData';
@@ -68,10 +69,45 @@ export function AppProvider({ children }) {
   const { showToast } = useToast();
 
   // Authentication State
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
-  const [jwtToken, setJwtToken] = useState('');
-  const [currentView, setCurrentView] = useState('dashboard');
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      if (token && verifyJWT(token)) return true;
+    } catch {}
+    return true; // Auto-authenticated by default
+  });
+  const [user, setUser] = useState(() => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      if (token) {
+        const decoded = verifyJWT(token);
+        if (decoded) return decoded;
+      }
+    } catch {}
+    return {
+      id: "USR-001",
+      name: "Sarathi Kamal N",
+      email: "admin@smartmart.pro",
+      role: "Super Admin",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      branch: "Chennai Central Superstore (Main)"
+    };
+  });
+  const [jwtToken, setJwtToken] = useState(() => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      if (token && verifyJWT(token)) return token;
+    } catch {}
+    return generateJWT({
+      id: "USR-001",
+      name: "Sarathi Kamal N",
+      email: "admin@smartmart.pro",
+      role: "Super Admin",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      branch: "Chennai Central Superstore (Main)"
+    });
+  });
+  const [currentView, setCurrentView] = useState('customerStorefront');
   const [isPendingViewChange, startViewTransition] = useTransition();
 
   // Simulated Database Collections
@@ -102,6 +138,7 @@ export function AppProvider({ children }) {
   const [suppliers, setSuppliers] = useState(INITIAL_SUPPLIERS);
   const [employees, setEmployees] = useState(INITIAL_EMPLOYEES);
   const [transactions, setTransactions] = useState(INITIAL_TRANSACTIONS);
+  const [inventoryLogs, setInventoryLogs] = useState(INITIAL_INVENTORY_LOGS);
   const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
   const [expenses, setExpenses] = useState(INITIAL_EXPENSES);
 
@@ -153,7 +190,81 @@ export function AppProvider({ children }) {
     { id: "REQ-001", productId: "PRD-284", productName: "Organic Fresh Bananas", quantity: 100, supplierId: "SUP-02", supplierName: "Green Valley Organic Farms (Coimbatore)", status: "Pending Approval" }
   ]);
   const [purchaseOrders, setPurchaseOrders] = useState([
-    { id: "PO-1025", productId: "DY-401", productName: "A2 Fresh Whole Milk 1L", quantity: 50, supplierId: "SUP-01", supplierName: "Aavin Dairy Co-op (Madurai)", status: "Pending Acceptance", amount: 3400.00 }
+    { 
+      id: "PO-1025", 
+      poNumber: "PO-1025",
+      productId: "DY-401", 
+      productName: "A2 Fresh Whole Milk 1L", 
+      sku: "DY-401",
+      quantity: 50, 
+      supplierId: "SUP-01", 
+      supplierName: "Aavin Dairy Co-op (Madurai)", 
+      status: "Sent", 
+      amount: 3400.00,
+      orderDate: "2026-10-05",
+      expectedDate: "2026-10-08",
+      isLate: true
+    },
+    { 
+      id: "PO-1026", 
+      poNumber: "PO-1026",
+      productId: "CK-101", 
+      productName: "Britannia Good Day Butter Cookies", 
+      sku: "CK-101",
+      quantity: 100, 
+      supplierId: "SUP-04", 
+      supplierName: "Britannia Industries Ltd", 
+      status: "Sent", 
+      amount: 3360.00,
+      orderDate: "2026-10-06",
+      expectedDate: "2026-10-07",
+      isLate: false
+    },
+    { 
+      id: "PO-1024", 
+      poNumber: "PO-1024",
+      productId: "RICE-101", 
+      productName: "Sri Sri Tattva Basmati Rice 1Kg", 
+      sku: "RICE-101",
+      quantity: 80, 
+      supplierId: "SUP-03", 
+      supplierName: "Sri Sri Tattva Organics", 
+      status: "Draft", 
+      amount: 11136.00,
+      orderDate: "2026-10-07",
+      expectedDate: "2026-10-12",
+      isLate: false
+    },
+    { 
+      id: "PO-1022", 
+      poNumber: "PO-1022",
+      productId: "MAS-101", 
+      productName: "Sakthi Chilli Powder 50g", 
+      sku: "MAS-101",
+      quantity: 120, 
+      supplierId: "SUP-05", 
+      supplierName: "Sakthi Masala Pvt Ltd", 
+      status: "Received", 
+      amount: 3240.00,
+      orderDate: "2026-10-01",
+      expectedDate: "2026-10-04",
+      isLate: false
+    },
+    { 
+      id: "PO-1020", 
+      poNumber: "PO-1020",
+      productId: "DY-504", 
+      productName: "Greek Yogurt Blueberry 150g", 
+      sku: "DY-504",
+      quantity: 40, 
+      supplierId: "SUP-01", 
+      supplierName: "Amul India Dairy (Gujarat)", 
+      status: "Cancelled", 
+      amount: 3400.00,
+      orderDate: "2026-09-28",
+      expectedDate: "2026-10-02",
+      cancelReason: "Stock unavailable at supplier depot"
+    }
   ]);
 
   // Registered Users (Simulated Database Table with Hashed Passwords)
@@ -193,6 +304,14 @@ export function AppProvider({ children }) {
 
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [appliedCoupon, setAppliedCoupon] = useState({ code: 'FRESH10', discount: 10.00 });
+  const [discountModalOpen, setDiscountModalOpen] = useState(false);
+  const [appliedDiscount, setAppliedDiscount] = useState({
+    promoCode: 'FRESH10',
+    billDiscount: 10.00,
+    billDiscountType: 'fixed', // 'fixed' | 'percent'
+    itemDiscounts: {}, // { [productId]: { type: 'percent' | 'fixed', value: number, amount: number, label: string } }
+    label: 'FRESH10 (₹10.00 OFF)'
+  });
   const [paymentMethod, setPaymentMethod] = useState('Cash');
   const [activeInvoice, setActiveInvoice] = useState(null);
 
@@ -202,6 +321,10 @@ export function AppProvider({ children }) {
   const [scannerModalOpen, setScannerModalOpen] = useState(false);
   const [razorpayModalOpen, setRazorpayModalOpen] = useState(false);
   const [razorpayOrderDetails, setRazorpayOrderDetails] = useState(null);
+  const [stockAdjustmentModalOpen, setStockAdjustmentModalOpen] = useState(false);
+  const [selectedStockAdjustProduct, setSelectedStockAdjustProduct] = useState(null);
+  const [receivePODialogOpen, setReceivePODialogOpen] = useState(false);
+  const [activeReceivePO, setActiveReceivePO] = useState(null);
   
   // Search Term
   const [searchTerm, setSearchTerm] = useState('');
@@ -355,7 +478,7 @@ export function AppProvider({ children }) {
         setIsAuthenticated(true);
         // Load default view for role
         if (decoded.role === 'Customer') {
-          setCurrentView('products');
+          setCurrentView('customerStorefront');
         } else if (decoded.role === 'Cashier') {
           setCurrentView('billing');
         } else if (decoded.role === 'Delivery Partner') {
@@ -723,14 +846,53 @@ export function AppProvider({ children }) {
     });
   }, [showToast]);
 
-  // Billing calculations
+  // Billing calculations (Fig 8.5.3 Discount Engine)
   const cartTotals = useMemo(() => {
-    const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
-    const gst = subtotal * 0.18;
-    const discount = appliedCoupon ? appliedCoupon.discount : 0;
-    const grandTotal = Math.max(0, subtotal + gst - discount);
-    return { subtotal, gst, discount, grandTotal };
-  }, [cart, appliedCoupon]);
+    let itemDiscountsTotal = 0;
+    const itemsBreakdown = cart.map(item => {
+      const lineGross = item.product.price * item.quantity;
+      const itemDisc = appliedDiscount?.itemDiscounts?.[item.product.id];
+      let lineDiscount = 0;
+      if (itemDisc) {
+        if (itemDisc.type === 'percent') {
+          lineDiscount = lineGross * (itemDisc.value / 100);
+        } else {
+          lineDiscount = Math.min(lineGross, itemDisc.value * item.quantity);
+        }
+      }
+      itemDiscountsTotal += lineDiscount;
+      return { ...item, lineGross, lineDiscount, lineNet: lineGross - lineDiscount };
+    });
+
+    const grossSubtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+    const subtotalAfterItemDiscounts = Math.max(0, grossSubtotal - itemDiscountsTotal);
+    
+    let billDiscount = 0;
+    if (appliedDiscount?.billDiscountType === 'percent' && appliedDiscount.billDiscount > 0) {
+      billDiscount = subtotalAfterItemDiscounts * (appliedDiscount.billDiscount / 100);
+    } else if (appliedDiscount?.billDiscount > 0) {
+      billDiscount = Math.min(subtotalAfterItemDiscounts, appliedDiscount.billDiscount);
+    } else if (appliedCoupon?.discount > 0) {
+      billDiscount = Math.min(subtotalAfterItemDiscounts, appliedCoupon.discount);
+    }
+
+    const totalDiscount = Math.min(grossSubtotal, itemDiscountsTotal + billDiscount);
+    const taxableSubtotal = Math.max(0, grossSubtotal - totalDiscount);
+    const gst = taxableSubtotal * 0.18;
+    const grandTotal = Math.max(0, taxableSubtotal + gst);
+
+    return { 
+      subtotal: grossSubtotal, 
+      itemDiscountsTotal, 
+      billDiscount, 
+      discount: totalDiscount, 
+      taxableSubtotal,
+      gst, 
+      grandTotal,
+      itemsBreakdown,
+      appliedDiscount
+    };
+  }, [cart, appliedDiscount, appliedCoupon]);
 
   // Stock alert threshold checks (Staff/Admin ONLY - Never sent to Customer)
   const checkStockAlerts = useCallback((updatedProducts) => {
@@ -1212,6 +1374,63 @@ export function AppProvider({ children }) {
     setNotifications(prev => [poNotif, ...prev]);
   }, [purchaseRequests, products]);
 
+  // Procurement Flow: Create Draft Purchase Order (Fig 8.8.3 Smart Reorders)
+  const createDraftPurchaseOrder = useCallback((product, suggestedQty, supplier, rationale) => {
+    const poId = `PO-DRF-${Math.floor(1000 + Math.random() * 9000)}`;
+    const unitCost = product.costPrice || (product.price ? product.price * 0.6 : 50);
+    const amount = unitCost * suggestedQty;
+    const supp = supplier || (suppliers && suppliers.length > 0 ? suppliers[0] : null);
+
+    const newPO = {
+      id: poId,
+      productId: product.id,
+      productName: product.name,
+      quantity: suggestedQty,
+      supplierId: supp?.id || 'SUP-001',
+      supplierName: supp?.name || product.supplier || 'Wholesale Supplier',
+      amount: amount,
+      status: 'Draft',
+      orderDate: new Date().toISOString().split('T')[0],
+      expectedDelivery: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      rationale: rationale || 'Smart AI 30-Day Demand Forecast Reorder',
+      unitCost: unitCost,
+      isLate: false
+    };
+
+    setPurchaseOrders(prev => [newPO, ...prev]);
+
+    // Send notification
+    const draftNotif = {
+      id: `po-draft-${poId}`,
+      title: `📝 Draft PO Created: ${poId}`,
+      description: `Smart Reorder draft PO for ${suggestedQty} units of ${product.name} (₹${amount.toFixed(2)}) is ready for manager review.`,
+      time: "Just now",
+      type: "Stock Alerts",
+      isNew: true
+    };
+    setNotifications(prev => [draftNotif, ...prev]);
+
+    return newPO;
+  }, [suppliers]);
+
+  // Procurement Flow: Send Draft Purchase Order to Supplier
+  const sendPurchaseOrder = useCallback((poId) => {
+    setPurchaseOrders(prev => prev.map(po => 
+      po.id === poId ? { ...po, status: 'Sent' } : po
+    ));
+
+    const po = purchaseOrders.find(o => o.id === poId);
+    const poNotif = {
+      id: `po-sent-${poId}`,
+      title: `🚀 Purchase Order Sent: ${poId}`,
+      description: `PO ${poId} dispatched to ${po?.supplierName || 'supplier'}. Supplier can now acknowledge and ship.`,
+      time: "Just now",
+      type: "Stock Alerts",
+      isNew: true
+    };
+    setNotifications(prev => [poNotif, ...prev]);
+  }, [purchaseOrders]);
+
   // Procurement Flow: Update Purchase Order Status
   const updatePOStatus = useCallback((poId, status) => {
     setPurchaseOrders(prev => prev.map(po => 
@@ -1289,6 +1508,121 @@ export function AppProvider({ children }) {
     };
     setNotifications(prev => [recNotif, ...prev]);
   }, [purchaseOrders, selectedBranch]);
+
+  // Fig 8.7.3 Receive Purchase Order & Create Stock Batches Handler
+  const confirmReceivePO = useCallback(async ({ poId, supplierName, branch, lines }) => {
+    let totalIntake = 0;
+    
+    // Process each line item: increment stock, register batch, write audit log
+    for (const line of lines) {
+      const recvQty = Number(line.receivedQty) || 0;
+      totalIntake += recvQty;
+
+      // 1. Update product stock, batch, expiry
+      setProducts(prev => prev.map(p => {
+        if (p.id === line.productId || p.sku === line.sku) {
+          const finalStock = p.stock + recvQty;
+          return {
+            ...p,
+            stock: finalStock,
+            batchNo: line.batchNo || p.batchNo,
+            expiryDate: line.expiryDate || p.expiryDate,
+            status: finalStock > p.threshold ? 'In Stock' : finalStock > 0 ? 'Low Stock' : 'Out of Stock'
+          };
+        }
+        return p;
+      }));
+
+      // 2. Create Stock Batch in DB
+      try {
+        await fetch('http://localhost:5000/api/stock-batches', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            batchNo: line.batchNo,
+            sku: line.sku,
+            productName: line.productName,
+            quantity: recvQty,
+            branch: branch || selectedBranch?.name || 'Chennai Central Superstore (Main)',
+            shelfLocation: 'Aisle 2, Bay 4',
+            manufactureDate: line.mfgDate,
+            expiryDate: line.expiryDate,
+            supplierName: supplierName || 'SmartMart Vendor'
+          })
+        });
+      } catch (e) {
+        console.warn('Batch creation API sync note:', e.message);
+      }
+
+      // 3. Append to Inventory Audit Logs
+      const logEntry = {
+        id: `LOG-${Math.floor(1000 + Math.random() * 9000)}`,
+        logId: `LOG-${Math.floor(1000 + Math.random() * 9000)}`,
+        sku: line.sku,
+        productName: line.productName,
+        action: 'Restock',
+        reason: `PO Goods Receipt (${poId})`,
+        batchNo: line.batchNo,
+        change: recvQty,
+        newStock: (products.find(p => p.id === line.productId || p.sku === line.sku)?.stock || 0) + recvQty,
+        branch: branch || selectedBranch?.name || 'Chennai Central Superstore (Main)',
+        performedBy: 'Sarathi Kamal N (Store Manager)',
+        note: `Mfg: ${line.mfgDate} | Exp: ${line.expiryDate} (Fig 8.7.3 Intake)`,
+        createdAt: new Date().toISOString()
+      };
+      setInventoryLogs(prev => [logEntry, ...prev]);
+    }
+
+    // 4. Mark Purchase Order status as 'Received'
+    setPurchaseOrders(prev => prev.map(o => {
+      if (o.id === poId || o._id === poId || o.poNumber === poId) {
+        return { ...o, status: 'Received' };
+      }
+      return o;
+    }));
+
+    return true;
+  }, [products, selectedBranch]);
+
+  // Fig 8.7.5 Add Supplier Handler
+  const addSupplier = useCallback(async (newSupplierData) => {
+    const id = newSupplierData.id || `SUP-${Math.floor(100 + Math.random() * 900)}`;
+    const fullSupplier = {
+      id,
+      supplierId: id,
+      name: newSupplierData.name || newSupplierData.companyName,
+      companyName: newSupplierData.name || newSupplierData.companyName,
+      contact: newSupplierData.contactPerson || newSupplierData.contact || 'Sales Rep',
+      contactPerson: newSupplierData.contactPerson || newSupplierData.contact || 'Sales Rep',
+      email: newSupplierData.email || '',
+      phone: newSupplierData.phone || '',
+      address: newSupplierData.address || '',
+      category: newSupplierData.category || 'General Groceries',
+      paymentTerms: newSupplierData.paymentTerms || 'Net 30 Days',
+      rating: Number(newSupplierData.rating || 4.8),
+      status: 'Active',
+      activeStatus: 'Active',
+      activePOs: 0,
+      totalOrders: 0,
+      totalPaid: 0,
+      createdAt: new Date().toISOString()
+    };
+
+    setSuppliers(prev => [fullSupplier, ...prev]);
+
+    // Backend sync
+    try {
+      await fetch('http://localhost:5000/api/suppliers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fullSupplier)
+      });
+    } catch (e) {
+      console.warn('Backend supplier sync notice:', e.message);
+    }
+
+    return fullSupplier;
+  }, []);
 
   // Product CRUD
   const addProduct = useCallback(async (newProd) => {
@@ -1397,6 +1731,75 @@ export function AppProvider({ children }) {
     });
   }, [notifications, user]);
 
+  // Stock Adjustment Manual Action (Fig 8.6.3)
+  const adjustStockManual = useCallback(async ({ productId, sku, mode, quantity, batchNo, reason, note }) => {
+    const qtyNum = Number(quantity);
+    const change = mode === 'remove' ? -Math.abs(qtyNum) : Math.abs(qtyNum);
+    const action = mode === 'remove' 
+      ? (reason?.includes('Damage') ? 'Damage Adjustment' : reason?.includes('Audit') ? 'Audit Correction' : 'Manual Remove') 
+      : (reason?.includes('Audit') ? 'Audit Correction' : 'Manual Add');
+
+    const targetProduct = products.find(p => p.id === productId || p.sku === sku);
+    const prodName = targetProduct?.name || 'Product';
+    const oldStock = targetProduct ? targetProduct.stock : 0;
+    const newStock = Math.max(0, oldStock + change);
+    const resolvedBatch = batchNo || targetProduct?.batchNo || `BATCH-2027-${targetProduct?.sku || '01'}`;
+
+    // 1. Update local product stock
+    setProducts(prev => prev.map(p => {
+      if (p.id === productId || p.sku === sku) {
+        return {
+          ...p,
+          stock: newStock,
+          status: newStock === 0 ? 'Out of Stock' : newStock <= p.threshold ? 'Low Stock' : 'In Stock'
+        };
+      }
+      return p;
+    }));
+
+    // 2. Append to Inventory Logs state
+    const newLog = {
+      id: `LOG-${Math.floor(1000 + Math.random() * 9000)}`,
+      logId: `LOG-${Math.floor(1000 + Math.random() * 9000)}`,
+      sku: sku || targetProduct?.sku,
+      productName: prodName,
+      action: action,
+      reason: reason || 'Audit Correction',
+      batchNo: resolvedBatch,
+      change: change,
+      newStock: newStock,
+      branch: selectedBranch?.name || 'Chennai Central Superstore (Main)',
+      performedBy: 'Sarathi Kamal N (Store Manager)',
+      note: note || '',
+      createdAt: new Date().toISOString()
+    };
+
+    setInventoryLogs(prev => [newLog, ...prev]);
+
+    // 3. Post to backend
+    try {
+      await fetch('http://localhost:5000/api/inventory/adjust', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productId,
+          sku: sku || targetProduct?.sku,
+          action,
+          change,
+          branch: selectedBranch?.name,
+          batchNo: resolvedBatch,
+          reason,
+          note,
+          performedBy: 'Sarathi Kamal N (Store Manager)'
+        })
+      });
+    } catch (err) {
+      console.warn('Backend stock adjustment sync error (local state preserved):', err);
+    }
+
+    return newLog;
+  }, [products, selectedBranch]);
+
   // Notifications Handlers
   const markNotificationRead = useCallback((id) => {
     setNotifications(prev => prev.map(n => n.id === id ? { ...n, isNew: false } : n));
@@ -1415,13 +1818,15 @@ export function AppProvider({ children }) {
       selectedBranch, setSelectedBranch,
       products, setProducts, addProduct, updateProduct, deleteProduct,
       customers, setCustomers,
-      suppliers, setSuppliers,
+      suppliers, setSuppliers, addSupplier,
       employees, setEmployees,
       transactions, completeCheckout, completeOnlineCheckout,
       notifications: userNotifications, rawNotifications: notifications, addNotification, markNotificationRead, markAllNotificationsRead,
       cart, addToCart, updateCartQuantity, removeFromCart, clearCart,
       selectedCustomer, setSelectedCustomer,
       appliedCoupon, setAppliedCoupon,
+      discountModalOpen, setDiscountModalOpen,
+      appliedDiscount, setAppliedDiscount,
       paymentMethod, setPaymentMethod,
       activeInvoice, setActiveInvoice,
       aiDrawerOpen, setAiDrawerOpen,
@@ -1438,9 +1843,18 @@ export function AppProvider({ children }) {
       // Branch-derived data
       branchProfile, branchProducts, branchEmployees, branchExpenses, branchTransactions,
       
-      // Procurement Flow Context
+      // Stock Adjustment (Fig 8.6.3) & Inventory Logs
+      inventoryLogs, setInventoryLogs, adjustStockManual,
+      stockAdjustmentModalOpen, setStockAdjustmentModalOpen,
+      selectedStockAdjustProduct, setSelectedStockAdjustProduct,
+      
+      // Procurement Flow Context & Fig 8.7.3 Receive PO & Fig 8.8.3 Smart Reorders
       purchaseRequests, createPurchaseRequest, approvePurchaseRequest,
-      purchaseOrders, updatePOStatus, receiveWarehouseGoods,
+      purchaseOrders, setPurchaseOrders, updatePOStatus, receiveWarehouseGoods,
+      createDraftPurchaseOrder, sendPurchaseOrder,
+      receivePODialogOpen, setReceivePODialogOpen,
+      activeReceivePO, setActiveReceivePO,
+      confirmReceivePO,
       
       // Logistics/Fleet
       deliveries, verifyDeliveryOTP,

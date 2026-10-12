@@ -2,16 +2,27 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useSoundEffects } from '../hooks/useCustomHooks';
+import ReceivePODialog from '../components/ReceivePODialog';
 import { 
   Building2, 
   ArrowRightLeft, 
   MapPin, 
   CheckCircle2, 
-  Truck
+  Truck,
+  PackageCheck
 } from 'lucide-react';
 
 export default function WarehouseBranchesView() {
-  const { branches, products, purchaseOrders, receiveWarehouseGoods } = useApp();
+  const { 
+    branches, 
+    products, 
+    purchaseOrders, 
+    receiveWarehouseGoods,
+    receivePODialogOpen,
+    setReceivePODialogOpen,
+    activeReceivePO,
+    setActiveReceivePO
+  } = useApp();
   const { playSuccess, playBeep } = useSoundEffects();
   const { t } = useLanguage();
 
@@ -217,12 +228,26 @@ export default function WarehouseBranchesView() {
                       />
                     </div>
 
-                    <button
-                      onClick={() => handleVerify(po.id, po.quantity)}
-                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold rounded-lg shadow-sm transition-transform active:scale-95 mt-4 md:mt-0"
-                    >
-                      VERIFY & UPDATE INVENTORY
-                    </button>
+                    <div className="flex items-center gap-2 mt-4 md:mt-0">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setActiveReceivePO(po);
+                          setReceivePODialogOpen(true);
+                        }}
+                        className="px-3.5 py-2 bg-gradient-to-r from-teal-600 via-emerald-600 to-teal-700 hover:brightness-110 text-white font-extrabold rounded-xl shadow-md shadow-teal-600/20 transition-transform active:scale-95 flex items-center gap-1.5 cursor-pointer text-xs"
+                      >
+                        <PackageCheck className="w-3.5 h-3.5" />
+                        <span>RECEIVE GOODS (Fig 8.7.3)</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleVerify(po.id, po.quantity)}
+                        className="px-3 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl border border-slate-200 dark:border-slate-700 text-xs transition-colors"
+                      >
+                        Quick Verify
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
@@ -230,6 +255,16 @@ export default function WarehouseBranchesView() {
           </div>
         )}
       </div>
+
+      {/* Fig 8.7.3 Receive Purchase Order Dialog */}
+      <ReceivePODialog
+        isOpen={receivePODialogOpen}
+        onClose={() => {
+          setReceivePODialogOpen(false);
+          setActiveReceivePO(null);
+        }}
+        purchaseOrder={activeReceivePO}
+      />
     </div>
   );
 }

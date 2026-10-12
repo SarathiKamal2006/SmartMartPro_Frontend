@@ -15,7 +15,9 @@ import {
   Phone,
   User,
   ShieldCheck,
-  Sparkles
+  Sparkles,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 export default function CustomersView() {
@@ -23,6 +25,8 @@ export default function CustomersView() {
   const { playClick, playSuccess } = useSoundEffects();
   const [filterTab, setFilterTab] = useState('All Shoppers');
   const [search, setSearch] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   // Add customer modal state
   const [showAddModal, setShowAddModal] = useState(false);
@@ -30,12 +34,23 @@ export default function CustomersView() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [filterTab, search]);
+
   const filtered = customers.filter(c => {
     if (filterTab === 'Gold Members') return c.tier === 'Gold';
     if (filterTab === 'High Spenders') return (c.totalSpent || 0) > 1000;
     return (c.name || '').toLowerCase().includes(search.toLowerCase()) || 
            (c.email || '').toLowerCase().includes(search.toLowerCase());
   });
+
+  const totalItems = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+  const validCurrentPage = Math.min(currentPage, totalPages);
+  const startIndex = (validCurrentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+  const paginatedCustomers = filtered.slice(startIndex, endIndex);
 
   // Dynamic statistics calculation
   const totalCustomersCount = customers.length;
@@ -233,7 +248,7 @@ export default function CustomersView() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-800 dark:text-slate-200">
-                {filtered.map((c) => (
+                {paginatedCustomers.map((c) => (
                   <tr key={c.id || c._id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
                     <td className="p-3.5 font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                       <div className="w-7 h-7 rounded-full bg-emerald-500/10 text-emerald-600 font-bold text-xs flex items-center justify-center border border-emerald-500/20">
@@ -265,6 +280,86 @@ export default function CustomersView() {
             </table>
           </div>
         )}
+
+        {/* Pagination Footer */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 text-xs text-slate-500 dark:text-slate-400 font-semibold border-t border-slate-100 dark:border-slate-800">
+          <div className="flex items-center gap-3">
+            <span>
+              Showing <strong className="text-slate-900 dark:text-white font-extrabold">{totalItems === 0 ? 0 : startIndex + 1} - {endIndex}</strong> of <strong className="text-slate-900 dark:text-white font-extrabold">{totalItems}</strong> customers (Page {validCurrentPage} of {totalPages})
+            </span>
+            <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-xl border border-slate-200 dark:border-slate-700">
+              <span className="text-[11px] text-slate-400 font-bold">Rows:</span>
+              <select
+                value={itemsPerPage}
+                onChange={(e) => {
+                  playClick();
+                  setItemsPerPage(Number(e.target.value));
+                  setCurrentPage(1);
+                }}
+                className="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-200 focus:outline-none cursor-pointer"
+              >
+                <option value={10} className="bg-white dark:bg-slate-900">10</option>
+                <option value={20} className="bg-white dark:bg-slate-900">20</option>
+                <option value={50} className="bg-white dark:bg-slate-900">50</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <button 
+              type="button"
+              disabled={validCurrentPage <= 1}
+              onClick={() => {
+                playClick();
+                setCurrentPage(prev => Math.max(1, prev - 1));
+              }}
+              className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed font-bold flex items-center gap-1 transition-all cursor-pointer"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <span>PREVIOUS</span>
+            </button>
+            
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNum => {
+              if (totalPages > 7 && Math.abs(pageNum - validCurrentPage) > 2 && pageNum !== 1 && pageNum !== totalPages) {
+                if (pageNum === 2 || pageNum === totalPages - 1) {
+                  return <span key={pageNum} className="px-1 text-slate-400">...</span>;
+                }
+                return null;
+              }
+              const isActive = pageNum === validCurrentPage;
+              return (
+                <button
+                  key={pageNum}
+                  type="button"
+                  onClick={() => {
+                    playClick();
+                    setCurrentPage(pageNum);
+                  }}
+                  className={`w-8 h-8 rounded-xl font-extrabold flex items-center justify-center transition-all cursor-pointer ${
+                    isActive 
+                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30 scale-105' 
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              );
+            })}
+
+            <button 
+              type="button"
+              disabled={validCurrentPage >= totalPages || totalPages === 0}
+              onClick={() => {
+                playClick();
+                setCurrentPage(prev => Math.min(totalPages, prev + 1));
+              }}
+              className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed font-bold flex items-center gap-1 transition-all cursor-pointer"
+            >
+              <span>NEXT</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Add Customer Modal */}

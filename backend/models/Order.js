@@ -34,13 +34,17 @@ const orderSchema = new mongoose.Schema({
     required: true,
     default: 0
   },
-  tax: {
-    type: Number,
-    default: 0
-  },
   discount: {
     type: Number,
     default: 0
+  },
+  promoCode: {
+    type: String,
+    default: ''
+  },
+  appliedDiscount: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {}
   },
   total: {
     type: Number,

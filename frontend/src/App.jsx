@@ -61,6 +61,47 @@ function AccessDenied({ role, requestedView, onRedirect }) {
     </div>
   );
 }
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("View Error caught by ErrorBoundary:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex flex-col items-center justify-center py-16 px-4 text-center space-y-4 max-w-lg mx-auto bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-rose-200 dark:border-rose-900/50 rounded-3xl shadow-xl mt-10">
+          <div className="w-14 h-14 rounded-full bg-rose-500/10 text-rose-500 flex items-center justify-center">
+            <ShieldAlert className="w-8 h-8" />
+          </div>
+          <h3 className="text-lg font-black text-slate-900 dark:text-white">Something went wrong loading this screen</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-mono max-w-md bg-slate-100 dark:bg-slate-800 p-3 rounded-xl break-all">
+            {this.state.error?.message || "An unexpected rendering error occurred"}
+          </p>
+          <button
+            onClick={() => {
+              this.setState({ hasError: false, error: null });
+              window.location.reload();
+            }}
+            className="px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-500 transition-colors"
+          >
+            Reload Screen
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 function MainLayout() {
   const { 
     currentView, 
@@ -75,7 +116,7 @@ function MainLayout() {
     user, 
     setAiDrawerOpen 
   } = useApp();
-  const allowedViews = ROLE_VIEWS[user?.role] || ['dashboard', 'products', 'aiForecasting'];
+  const allowedViews = ROLE_VIEWS[user?.role] || ['customerStorefront', 'products', 'deliveries'];
   const isAuthorized = allowedViews.includes(currentView);
 
   const handleRedirect = () => {
@@ -97,7 +138,7 @@ function MainLayout() {
 
     switch (currentView) {
       case 'dashboard': return <DashboardView />;
-      case 'customerStorefront': return <ProductsView />;
+      case 'customerStorefront': return <CustomerStorefrontView />;
       case 'products': return <ProductsView />;
       case 'inventory': return <InventoryView />;
       case 'billing': return <BillingPOSView />;
@@ -134,7 +175,9 @@ function MainLayout() {
 
         <main className="flex-1 p-6 overflow-y-auto relative z-10 pothys-grocery-bg">
           <div className="max-w-7xl mx-auto space-y-6">
-            {renderView()}
+            <ErrorBoundary key={currentView}>
+              {renderView()}
+            </ErrorBoundary>
           </div>
         </main>
       </div>

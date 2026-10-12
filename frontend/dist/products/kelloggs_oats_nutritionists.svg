@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="kelRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e53935"/>
+      <stop offset="50%" stop-color="#c62828"/>
+      <stop offset="100%" stop-color="#b71c1c"/>
+    </linearGradient>
+  </defs>
+  <!-- Kellogg's Pouch Body -->
+  <path d="M 125 55 L 275 55 L 285 340 Q 285 355 200 355 Q 115 355 115 340 Z" fill="url(#kelRed)"/>
+  <!-- Kellogg's Cursive Script Logo -->
+  <text x="200" y="115" font-family="Brush Script MT, cursive, Arial" font-weight="900" font-size="38" fill="#ffffff" text-anchor="middle">Kellogg's</text>
+  <!-- White Banner -->
+  <rect x="135" y="135" width="130" height="65" rx="6" fill="#ffffff"/>
+  <text x="200" y="165" font-family="Arial, sans-serif" font-weight="900" font-size="24" fill="#d32f2f" text-anchor="middle">OATS</text>
+  <text x="200" y="185" font-family="Arial, sans-serif" font-weight="800" font-size="9" fill="#2e7d32" text-anchor="middle">TRUSTED BY NUTRITIONISTS</text>
+  <!-- 10% Extra Green Badge -->
+  <rect x="145" y="210" width="110" height="25" fill="#2e7d32"/>
+  <text x="200" y="227" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#ffffff" text-anchor="middle">10% EXTRA</text>
+  <!-- Bowl of Oats -->
+  <ellipse cx="200" cy="275" rx="42" ry="20" fill="#fffde7" stroke="#ffee58" stroke-width="2"/>
+  <!-- Net Weight -->
+  <rect x="165" y="320" width="70" height="20" rx="4" fill="#ffffff"/>
+  <text x="200" y="334" font-family="Arial, sans-serif" font-weight="800" font-size="11" fill="#c62828" text-anchor="middle">900 gm</text>
+</svg>

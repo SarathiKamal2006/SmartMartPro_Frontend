@@ -118,6 +118,8 @@ const createOrder = async (req, res) => {
       subtotal,
       tax,
       discount: disc,
+      promoCode: req.body.promoCode || '',
+      appliedDiscount: req.body.appliedDiscount || {},
       total,
       paymentMethod: paymentMethod || 'Cash',
       paymentStatus: 'Paid',

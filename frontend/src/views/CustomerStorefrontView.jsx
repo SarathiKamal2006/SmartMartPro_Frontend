@@ -37,12 +37,15 @@ import {
   Home,
   LocateFixed,
   Briefcase,
-  Zap
+  Zap,
+  Bike,
+  AlertCircle
 } from 'lucide-react';
 import { startRazorpayPayment } from '../services/paymentService';
 
 const STOREFRONT_CATEGORIES = [
   { id: 'cat-all', name: 'All Categories', image: '/dashboard_grocery_basket.png' },
+  { id: 'cat-cookies', name: 'Cookies & Biscuits', image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=400&q=80' },
   { id: 'cat-produce', name: 'Fruits & Vegetables', image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=400&q=80' },
   { id: 'cat-staples', name: 'Staples', image: '/categories/cat_staples.png' },
   { id: 'cat-snacks', name: 'Snacks & Namkeens', image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?auto=format&fit=crop&w=400&q=80' },
@@ -70,6 +73,9 @@ export default function CustomerStorefrontView() {
     submitReview,
     setRazorpayModalOpen,
     setRazorpayOrderDetails,
+    searchTerm,
+    setSearchTerm,
+    deferredSearchTerm,
     showToast
   } = useApp();
   const { t } = useLanguage();
@@ -77,8 +83,15 @@ export default function CustomerStorefrontView() {
 
   const [activeSubTab, setActiveSubTab] = useState('shop'); // 'shop' | 'cart' | 'orders'
   const [selectedCat, setSelectedCat] = useState('All Categories');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(searchTerm || '');
   const deferredSearch = useDeferredValue(searchQuery);
+
+  // Sync internal search query with global header search term
+  useEffect(() => {
+    if (searchTerm !== undefined && searchTerm !== searchQuery) {
+      setSearchQuery(searchTerm);
+    }
+  }, [searchTerm]);
 
   const [wishlist, setWishlist] = useState(['PRD-284']);
 
@@ -230,8 +243,12 @@ export default function CustomerStorefrontView() {
              pCat.includes('oil') || pCat.includes('spice') || pCat.includes('masala');
     }
 
+    if (tCat.includes('cookie') || tCat.includes('biscuit')) {
+      return pCat.includes('cookie') || pCat.includes('biscuit') || pCat.includes('snack') || pCat.includes('bakery');
+    }
+
     if (tCat.includes('snack')) {
-      return pCat.includes('snack') || pCat.includes('biscuit') || pCat.includes('namkeen') || 
+      return pCat.includes('snack') || pCat.includes('biscuit') || pCat.includes('cookie') || pCat.includes('namkeen') || 
              pCat.includes('chip') || pCat.includes('noodle') || pCat.includes('chocolate') || pCat.includes('candy');
     }
 
@@ -266,13 +283,17 @@ export default function CustomerStorefrontView() {
   };
 
   const filteredProducts = products.filter(p => {
-    if (deferredSearch.trim()) {
-      const q = deferredSearch.toLowerCase();
-      const matchesName = (p.name || '').toLowerCase().includes(q);
-      const matchesCat = (p.category || '').toLowerCase().includes(q);
-      const matchesBrand = (p.brand || '').toLowerCase().includes(q);
-      const matchesSku = (p.sku || '').toLowerCase().includes(q);
-      if (!matchesName && !matchesCat && !matchesBrand && !matchesSku) return false;
+    const effectiveQ = (deferredSearch || deferredSearchTerm || '').trim().toLowerCase();
+    if (effectiveQ) {
+      const matchesName = (p.name || '').toLowerCase().includes(effectiveQ);
+      const matchesCat = (p.category || '').toLowerCase().includes(effectiveQ);
+      const matchesBrand = (p.brand || '').toLowerCase().includes(effectiveQ);
+      const matchesSku = (p.sku || '').toLowerCase().includes(effectiveQ);
+      const matchesDesc = (p.description || '').toLowerCase().includes(effectiveQ);
+      const matchesSupplier = (p.supplier || '').toLowerCase().includes(effectiveQ);
+      const isCookieTerm = (effectiveQ.includes('cookie') || effectiveQ.includes('biscuit') || effectiveQ.includes('bisc')) && 
+        ((p.name || '').toLowerCase().includes('cookie') || (p.name || '').toLowerCase().includes('biscuit') || (p.category || '').toLowerCase().includes('cookie') || (p.category || '').toLowerCase().includes('biscuit'));
+      if (!matchesName && !matchesCat && !matchesBrand && !matchesSku && !matchesDesc && !matchesSupplier && !isCookieTerm) return false;
     }
 
     if (selectedCat && selectedCat !== 'All Categories' && selectedCat !== 'cat-all') {
@@ -549,40 +570,353 @@ export default function CustomerStorefrontView() {
         </div>
       </div>
 
-      {/* ─── TAB 1: SHOP PRODUCTS ────────────────────────────────────────── */}
+      {/* ─── TAB 1: SHOP PRODUCTS (FIG 8.9.1 OMNICHANNEL STOREFRONT) ─────── */}
       {activeSubTab === 'shop' && (
         <div className="space-y-6">
-          {/* Category Chips Bar */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-            {STOREFRONT_CATEGORIES.map((c) => {
-              const isSelected = selectedCat === c.name;
-              return (
-                <button
-                  key={c.id}
-                  onClick={() => setSelectedCat(c.name)}
-                  className={`px-4 py-2 rounded-2xl text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer ${
-                    isSelected
-                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
-                      : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 border border-slate-200 dark:border-slate-800'
-                  }`}
-                >
-                  {c.name}
-                </button>
-              );
-            })}
+          {/* Fig 8.9.1 Free Delivery Promo Banner */}
+          <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-800 text-white p-4 rounded-3xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-3 border border-emerald-400/30">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-white shrink-0">
+                <Truck className="w-5 h-5 animate-bounce" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="bg-emerald-300/20 text-emerald-100 text-[10px] font-mono font-black uppercase px-2 py-0.5 rounded border border-emerald-300/30">
+                    FIG 8.9.1 SPECIFICATION
+                  </span>
+                  <span className="font-black text-sm text-white">
+                    🎉 Free Express Delivery on Orders Over ₹199
+                  </span>
+                </div>
+                <p className="text-[11px] text-emerald-100 font-medium">
+                  Use Promo Code: <strong className="text-white underline">FREEDEL</strong> · 10-Minute Hyperlocal Delivery Guarantee.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="text-[10px] font-mono font-black bg-white/15 px-3 py-1.5 rounded-xl border border-white/20">
+                ⚡ 10-MIN RAPID DISPATCH
+              </span>
+            </div>
           </div>
 
-          {/* Products Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {filteredProducts.map((p) => (
-              <ProductCard
-                key={p.id || p.sku}
-                product={p}
-                onOpenDetails={(item) => setSelectedProductDetails(item)}
-                wishlist={wishlist}
-                toggleWishlist={toggleWishlist}
-              />
-            ))}
+          {/* Category Pills Bar */}
+          <div>
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+              {STOREFRONT_CATEGORIES.map((c) => {
+                const isSelected = selectedCat === c.name;
+                return (
+                  <button
+                    key={c.id}
+                    onClick={() => {
+                      playClick();
+                      setSelectedCat(c.name);
+                    }}
+                    className={`px-4 py-2 rounded-2xl text-xs font-black whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                      isSelected
+                        ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30 scale-105'
+                        : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 border border-slate-200 dark:border-slate-800'
+                    }`}
+                  >
+                    <span>{c.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Omnichannel 2-Column Grid: Products Grid (Left) + Cart & Track Map (Right) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            {/* Left Column: Product Cards */}
+            <div className="lg:col-span-8 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                  Showing {filteredProducts.length} Supermarket Items in "{selectedCat}"
+                </span>
+                <span className="text-[11px] text-slate-400 font-bold">
+                  Click "+ ADD" to update real-time cart
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 gap-4">
+                {filteredProducts.map((p) => (
+                  <ProductCard
+                    key={p.id || p.sku}
+                    product={p}
+                    onOpenDetails={(item) => setSelectedProductDetails(item)}
+                    wishlist={wishlist}
+                    toggleWishlist={toggleWishlist}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Right Column: Persistent Cart Panel & Track Your Order Map (Fig 8.9.1) */}
+            <div className="lg:col-span-4 space-y-5 sticky top-4">
+              
+              {/* 1. Real-Time Cart Panel (FIG 8.9.3 SPECIFICATION) */}
+              <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold">
+                      <ShoppingCart className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <h3 className="font-black text-sm text-slate-900 dark:text-white">Shopping Cart Panel</h3>
+                        <span className="text-[9px] font-black bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded-md border border-emerald-500/30">
+                          Fig 8.9.3
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-slate-400 font-semibold">{cart.length} unique line items</p>
+                    </div>
+                  </div>
+                  {cart.length > 0 && (
+                    <span className="text-[10px] font-black font-mono bg-emerald-500/10 text-emerald-600 px-2 py-0.5 rounded-full">
+                      {cart.reduce((s, i) => s + i.quantity, 0)} Items
+                    </span>
+                  )}
+                </div>
+
+                {cart.length === 0 ? (
+                  <div className="py-6 text-center text-slate-400 space-y-2">
+                    <ShoppingBag className="w-8 h-8 mx-auto text-slate-300 dark:text-slate-700" />
+                    <p className="text-xs font-bold text-slate-600 dark:text-slate-400">Your basket is empty</p>
+                    <p className="text-[10px] text-slate-400">Add products from the catalog to start checkout.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {/* Item list with quantity controls and price */}
+                    <div className="max-h-56 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800 pr-1 space-y-2">
+                      {cart.map((item) => (
+                        <div key={item.product.id || item.product.sku} className="pt-2 flex items-center justify-between gap-2 text-xs">
+                          <div className="flex items-center gap-2 min-w-0 flex-1">
+                            <img 
+                              src={getProductImage(item.product)} 
+                              alt={item.product.name} 
+                              className="w-8 h-8 rounded-lg object-contain bg-slate-50 p-0.5 border shrink-0" 
+                              onError={(e) => { e.currentTarget.src = '/products/veg_potato.png'; }}
+                            />
+                            <div className="min-w-0">
+                              <p className="font-extrabold text-slate-900 dark:text-white text-xs truncate">{item.product.name}</p>
+                              <p className="text-[10px] text-slate-400 font-mono">₹{item.product.price.toFixed(2)} each</p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <button
+                              type="button"
+                              onClick={() => { playClick(); updateCartQuantity(item.product.id || item.product.sku, -1); }}
+                              className="w-5 h-5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 flex items-center justify-center cursor-pointer text-xs font-bold"
+                            >
+                              -
+                            </button>
+                            <span className="font-black text-xs w-4 text-center">{item.quantity}</span>
+                            <button
+                              type="button"
+                              onClick={() => { playClick(); updateCartQuantity(item.product.id || item.product.sku, 1); }}
+                              className="w-5 h-5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 flex items-center justify-center cursor-pointer text-xs font-bold"
+                            >
+                              +
+                            </button>
+                            <span className="font-black text-xs text-emerald-600 ml-1 font-mono">
+                              ₹{(item.product.price * item.quantity).toFixed(2)}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Financial Summary: Subtotal & GST (18%) */}
+                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-2xl space-y-1 text-xs border border-slate-100 dark:border-slate-800">
+                      <div className="flex justify-between text-slate-500 font-semibold">
+                        <span>Subtotal</span>
+                        <span className="font-mono font-bold text-slate-800 dark:text-slate-200">₹{cartTotals.subtotal.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between text-slate-500 font-semibold">
+                        <span>GST Tax (18%)</span>
+                        <span className="font-mono font-bold text-slate-800 dark:text-slate-200">₹{cartTotals.gst.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between text-emerald-600 font-semibold">
+                        <span>Delivery Charge</span>
+                        <span className="font-mono font-black text-emerald-600 uppercase text-[10px]">FREE</span>
+                      </div>
+                      <div className="pt-2 border-t border-slate-200 dark:border-slate-700 flex justify-between font-black text-sm text-slate-900 dark:text-white">
+                        <span>Grand Total</span>
+                        <span className="text-emerald-600 font-mono text-base">₹{cartTotals.grandTotal.toFixed(2)}</span>
+                      </div>
+                    </div>
+
+                    {/* Fig 8.9.3 Minimum-Order Rule Notice & Progress */}
+                    {(() => {
+                      const MIN_ORDER_AMOUNT = 199.00;
+                      const isMinMet = cartTotals.grandTotal >= MIN_ORDER_AMOUNT;
+                      const diff = (MIN_ORDER_AMOUNT - cartTotals.grandTotal).toFixed(2);
+                      const percent = Math.min(100, Math.round((cartTotals.grandTotal / MIN_ORDER_AMOUNT) * 100));
+
+                      return (
+                        <div className="space-y-2">
+                          {!isMinMet ? (
+                            <div className="p-2.5 bg-amber-500/10 border border-amber-500/30 rounded-2xl text-xs space-y-1.5">
+                              <div className="flex items-center justify-between text-amber-700 dark:text-amber-400 font-bold text-[11px]">
+                                <span className="flex items-center gap-1">
+                                  <AlertCircle className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                                  <span>Min. Order Rule: ₹199.00</span>
+                                </span>
+                                <span>Add ₹{diff} more</span>
+                              </div>
+                              <div className="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                                <div 
+                                  className="bg-amber-500 h-full rounded-full transition-all duration-300"
+                                  style={{ width: `${percent}%` }}
+                                />
+                              </div>
+                              <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                                Minimum order value not reached. Add ₹{diff} to enable checkout.
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="p-2 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-bold">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                              <span className="text-[11px]">Minimum order met (₹199+ reached)! Checkout enabled.</span>
+                            </div>
+                          )}
+
+                          {/* Checkout Button: Enabled once rule is met */}
+                          <button
+                            type="button"
+                            disabled={!isMinMet}
+                            onClick={() => {
+                              if (!isMinMet) return;
+                              playClick();
+                              setActiveSubTab('cart');
+                            }}
+                            className={`w-full py-3 font-black rounded-2xl text-xs flex items-center justify-center gap-2 transition-all ${
+                              isMinMet 
+                                ? 'bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:brightness-110 text-white shadow-lg shadow-emerald-600/25 active:scale-95 cursor-pointer' 
+                                : 'bg-slate-200 dark:bg-slate-800 text-slate-400 border border-slate-300 dark:border-slate-700 cursor-not-allowed opacity-75'
+                            }`}
+                          >
+                            <ShoppingCart className="w-4 h-4" />
+                            <span>
+                              {isMinMet 
+                                ? `CHECKOUT NOW (₹${cartTotals.grandTotal.toFixed(2)})` 
+                                : `MINIMUM ORDER ₹199 (ADD ₹${diff} MORE)`
+                              }
+                            </span>
+                          </button>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                )}
+              </div>
+
+              {/* 2. Fig 8.9.1 Track Your Order Map Widget */}
+              <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3.5">
+                <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2.5">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold">
+                      <Navigation className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="font-black text-xs text-slate-900 dark:text-white">Track Your Order</h4>
+                      <p className="text-[10px] text-slate-400 font-semibold">Live GPS Telemetry & Route Map</p>
+                    </div>
+                  </div>
+                  <span className="text-[9px] font-black bg-blue-500/10 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full border border-blue-500/20">
+                    LIVE
+                  </span>
+                </div>
+
+                {/* Simulated Visual Route Map Canvas */}
+                <div className="relative h-44 bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 p-3 flex flex-col justify-between select-none">
+                  {/* Street grid background pattern */}
+                  <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#60a5fa_1px,transparent_1px)] [background-size:12px_12px]" />
+
+                  {/* Route Polyline SVG Graphic */}
+                  <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 160">
+                    {/* Road trace */}
+                    <path
+                      d="M 35 125 C 80 120, 110 70, 160 85 C 210 100, 240 45, 270 40"
+                      fill="none"
+                      stroke="#1e293b"
+                      strokeWidth="8"
+                      strokeLinecap="round"
+                    />
+                    {/* Active route glowing line */}
+                    <path
+                      d="M 35 125 C 80 120, 110 70, 160 85 C 210 100, 240 45, 270 40"
+                      fill="none"
+                      stroke="#10b981"
+                      strokeWidth="3.5"
+                      strokeLinecap="round"
+                      strokeDasharray="6 3"
+                      className="animate-pulse"
+                    />
+                    {/* Depot Marker */}
+                    <circle cx="35" cy="125" r="7" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
+                    {/* Destination Marker */}
+                    <circle cx="270" cy="40" r="7" fill="#ef4444" stroke="#ffffff" strokeWidth="2" />
+                    {/* Moving Bike Marker */}
+                    <circle cx="160" cy="85" r="9" fill="#3b82f6" stroke="#ffffff" strokeWidth="2" />
+                  </svg>
+
+                  {/* Top Map Badges */}
+                  <div className="relative z-10 flex items-center justify-between text-[10px]">
+                    <span className="bg-slate-900/90 text-slate-200 font-bold px-2 py-0.5 rounded-lg border border-slate-700 flex items-center gap-1">
+                      <Store className="w-3 h-3 text-emerald-400" />
+                      <span>SmartMart Central Hub</span>
+                    </span>
+                    <span className="bg-emerald-500/20 text-emerald-300 font-black px-2 py-0.5 rounded-lg border border-emerald-500/30 flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      <span>ETA: 10 Mins</span>
+                    </span>
+                  </div>
+
+                  {/* Rider Floating Tooltip */}
+                  <div className="relative z-10 mx-auto bg-blue-900/90 text-white text-[10px] font-extrabold px-3 py-1 rounded-xl border border-blue-400/40 shadow-lg flex items-center gap-1.5">
+                    <Bike className="w-3.5 h-3.5 text-blue-300 animate-bounce" />
+                    <span>Rider: Sarathi Express (🛵 On Route)</span>
+                  </div>
+
+                  {/* Bottom Map Badges */}
+                  <div className="relative z-10 flex items-center justify-between text-[10px]">
+                    <span className="bg-slate-900/90 text-slate-200 font-bold px-2 py-0.5 rounded-lg border border-slate-700 flex items-center gap-1">
+                      <Home className="w-3 h-3 text-rose-400" />
+                      <span>Doorstep Delivery</span>
+                    </span>
+                    <span className="bg-amber-500/20 text-amber-300 font-mono font-black px-2 py-0.5 rounded-lg border border-amber-500/30">
+                      OTP: 8492
+                    </span>
+                  </div>
+                </div>
+
+                {/* Open Full Live GPS Telemetry button */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    playClick();
+                    setActiveTrackingDelivery((deliveries && deliveries[0]) || {
+                      id: 'DEL-8821',
+                      orderId: 'ORD-54910',
+                      customerName: user?.name || 'Valued Customer',
+                      status: 'Out for Delivery',
+                      driver: 'Sarathi Express',
+                      otp: '8492',
+                      estimatedTime: '10 Mins'
+                    });
+                  }}
+                  className="w-full py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <Navigation className="w-3.5 h-3.5 text-blue-500" />
+                  <span>EXPAND FULLSCREEN GPS TELEMETRY</span>
+                </button>
+              </div>
+
+            </div>
           </div>
         </div>
       )}

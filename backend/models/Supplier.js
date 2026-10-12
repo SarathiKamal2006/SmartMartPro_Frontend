@@ -31,6 +31,10 @@ const supplierSchema = new mongoose.Schema({
     type: String,
     default: 'General Produce'
   },
+  paymentTerms: {
+    type: String,
+    default: 'Net 30 Days'
+  },
   rating: {
     type: Number,
     default: 4.8
